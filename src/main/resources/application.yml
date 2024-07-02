@@ -15,7 +15,10 @@ spring:
 
   thymeleaf:
     cache: false
+    check-template-location: true
     prefix: "file:src/main/resources/templates/"
+    suffix: .html
+    enabled: true
 
 #  resources:
 #    static-locations: "file:src/main/resources/static"
