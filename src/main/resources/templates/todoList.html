@@ -1,0 +1,74 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>TODO List</title>
+    <link href="../css/bootstrap.min.css"
+          rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+</head>
+<body>
+
+<div class="container" style="max-width: 800px; margin-top: 10px;">
+    <div class="py-5 text-center"><h2>USER's TODO LIST</h2></div>
+
+    <!--일정 등록 버튼-->
+    <div class="row">
+        <div class="col">
+            <button class="btn btn-outline-primary float-end"
+                    onclick="location.href='todo.html'"
+                    th:onclick="|location.href='@{/todoAdd}'|"
+                    type="button">일정 등록
+            </button>
+        </div>
+    </div>
+
+    <hr class="my-4">
+
+    <!--테이블 시작 TODO:페이징 방식으로 변경-->
+    <div style="height: 400px; overflow-y: auto">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>TODO</th>
+                <th>Start</th>
+                <th>DeadLine</th>
+                <th>Priority</th>
+                <th>status</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr>
+                <!--예시 : 테스트-->
+                <td>1</td>
+                <td><a href="todoDetail">해야할 일</a></td>
+                <td>2024-07-02</td>
+                <td>2024-07-03</td>
+                <td>★★★★★</td>
+                <td>
+                    <div class="form-check">
+                        <input class="form-check-input" id="flexCheckDefault" type="checkbox" value="">
+                        <label class="form-check-label" for="flexCheckDefault">
+                        </label>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+
+        </table>
+        <!--테이블 종료-->
+    </div>
+
+    <hr class="my-4">
+
+    <div class="text-lg-end" style="margin-top: 30px">
+        <button class="btn btn-outline-primary"
+                th:onclick="|location.href='@{login}'|">로그아웃
+        </button>
+    </div>
+</div>
+
+</body>
+</html>
