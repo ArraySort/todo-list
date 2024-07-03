@@ -13,11 +13,7 @@ public class SignupService {
     private final SignupMapper signupMapper;
 
     public void createUser(SignupDto signupDto) {
-        UserVO userVO = UserVO.builder()
-                .userId(signupDto.getUserId())
-                .userPassword(signupDto.getUserPassword())
-                .userName(signupDto.getUserName())
-                .build();
+        UserVO userVO = UserVO.of(signupDto);
 
         signupMapper.insertUser(userVO);
     }

@@ -13,4 +13,11 @@ public class UserVO {
 
     private String userName;
 
+    public static UserVO of(SignupDto signupDto) {
+        return UserVO.builder()
+                .userId(signupDto.getUserId())
+                .userPassword(signupDto.getUserPassword())
+                .userName(signupDto.getUserName())
+                .build();
+    }
 }
