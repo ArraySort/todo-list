@@ -1,8 +1,8 @@
 package arraysort.todolist.domain;
 
-import lombok.Data;
+import lombok.Getter;
 
-@Data
+@Getter
 public class SignupDto {
 
     private String userId;
@@ -10,5 +10,10 @@ public class SignupDto {
     private String userPassword;
 
     private String userName;
-    
+
+    public SignupDto(String userId, String userPassword, String userName) {
+        this.userId = userId;
+        this.userPassword = userPassword;
+        this.userName = userName;
+    }
 }
