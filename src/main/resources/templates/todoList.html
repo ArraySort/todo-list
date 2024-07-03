@@ -13,8 +13,8 @@
     <div class="row">
         <div class="col">
             <button class="btn btn-outline-primary float-end"
-                    onclick="location.href='todo.html'"
-                    th:onclick="|location.href='@{/todoAdd}'|"
+                    onclick="location.href='todoAdd.html'"
+                    th:onclick="|location.href='@{add}'|"
                     type="button">일정 등록
             </button>
         </div>
@@ -40,7 +40,7 @@
             <tr>
                 <!--예시 : 테스트-->
                 <td>1</td>
-                <td><a href="todoDetail">해야할 일</a></td>
+                <td><a th:href="@{detail}">해야할 일</a></td>
                 <td>2024-07-02</td>
                 <td>2024-07-03</td>
                 <td>★★★★★</td>
@@ -62,7 +62,7 @@
 
     <div class="text-lg-end" style="margin-top: 30px">
         <button class="btn btn-outline-primary"
-                th:onclick="|location.href='@{login}'|">로그아웃
+                th:onclick="|location.href='@{/login}'|">로그아웃
         </button>
     </div>
 </div>
