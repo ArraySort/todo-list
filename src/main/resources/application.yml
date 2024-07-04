@@ -20,6 +20,9 @@ spring:
     suffix: .html
     enabled: true
 
+  messages:
+    basename: errors
+
 #  resources:
 #    static-locations: "file:src/main/resources/static"
 

@@ -4,7 +4,6 @@ import arraysort.todolist.domain.SignupDto;
 import arraysort.todolist.service.SignupService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 @RequiredArgsConstructor
-@Slf4j
 public class SignUpController {
 
     private final SignupService signupService;
@@ -27,6 +25,12 @@ public class SignUpController {
 
     @PostMapping("/signup")
     public String createUser(@Valid @ModelAttribute("user") SignupDto signupDto, BindingResult bindingResult) {
+
+        if (signupService.checkUser(signupDto) != 0) {
+            bindingResult.rejectValue("userId", "Check");
+            return "signup";
+        }
+
         if (bindingResult.hasErrors()) {
             return "signup";
         }
