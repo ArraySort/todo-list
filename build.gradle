@@ -34,7 +34,6 @@ dependencies {
     testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.3'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
-
     // Spring Live Reload 라이브러리 추가
     implementation 'org.springframework.boot:spring-boot-devtools'
 
@@ -43,6 +42,12 @@ dependencies {
 
     // Spring Validation 라이브러리 추가
     implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    // Spring Security 라이브러리 추가
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+
+    // Thymeleaf 에서 Spring Security 를 사용하기 위한 라이브러리 추가
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
 
 }
 
