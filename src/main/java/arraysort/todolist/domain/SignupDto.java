@@ -22,4 +22,8 @@ public class SignupDto {
     public SignupDto() {
 
     }
+    
+    public void encodePassword(String userPassword) {
+        this.userPassword = userPassword;
+    }
 }
