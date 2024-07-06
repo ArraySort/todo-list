@@ -20,4 +20,11 @@ public class UserVO {
                 .userName(signupDto.getUserName())
                 .build();
     }
+
+    public static UserVO of(LoginDto loginDto) {
+        return UserVO.builder()
+                .userId(loginDto.getUserId())
+                .userPassword(loginDto.getUserPassword())
+                .build();
+    }
 }

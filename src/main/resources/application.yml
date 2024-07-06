@@ -14,7 +14,7 @@ spring:
       enabled: true
 
   thymeleaf:
-    cache: false
+    cache: true
     check-template-location: true
     prefix: "file:src/main/resources/templates/"
     suffix: .html

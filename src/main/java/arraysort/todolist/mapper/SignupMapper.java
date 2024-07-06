@@ -5,8 +5,8 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface SignupMapper {
-    
-    void insertUser(UserVO signupUser);
 
-    int checkUser(UserVO signupUser);
+    void createUser(UserVO signupUser);
+
+    int checkUser(String userId);
 }

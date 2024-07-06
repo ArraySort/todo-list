@@ -4,27 +4,30 @@ import arraysort.todolist.domain.SignupDto;
 import arraysort.todolist.domain.UserVO;
 import arraysort.todolist.mapper.SignupMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class SignupService {
 
     private final SignupMapper signupMapper;
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
-    public void createUser(SignupDto signupDto) {
-        signupDto.encodePassword(passwordEncoder.encode(signupDto.getUserPassword()));
+    public void createUserService(SignupDto signupDto) {
+        String encodedPassword = passwordEncoder.encode(signupDto.getUserPassword());
+        signupDto.setUserPassword(encodedPassword);
         UserVO userVO = UserVO.of(signupDto);
-        signupMapper.insertUser(userVO);
+        signupMapper.createUser(userVO);
+
     }
 
     @Transactional
-    public int checkUser(SignupDto signupDto) {
-        UserVO userVO = UserVO.of(signupDto);
-        return signupMapper.checkUser(userVO);
+    public int checkUser(String userId) {
+        return signupMapper.checkUser(userId);
     }
 }
