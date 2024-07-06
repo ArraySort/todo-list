@@ -10,19 +10,19 @@ import lombok.Setter;
 @AllArgsConstructor
 public class SignupDto {
 
-    @NotBlank
+    @NotBlank(message = "필수 입력값입니다.")
     private String userId;
 
-    @NotBlank
+    @NotBlank(message = "필수 입력값입니다.")
     private String userPassword;
 
-    @NotBlank
+    @NotBlank(message = "필수 입력값입니다.")
     private String userName;
 
     public SignupDto() {
 
     }
-    
+
     public void encodePassword(String userPassword) {
         this.userPassword = userPassword;
     }

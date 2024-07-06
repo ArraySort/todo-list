@@ -10,18 +10,24 @@
     <div class="text-center"><h1>회원가입</h1></div>
 
     <!--회원가입 입력 폼 시작-->
-    <form action="signup.html" method="post" th:action th:object="${user}">
+    <form method="post" th:action="@{signup}" th:object="${user}">
         <div>
             <label for="userId"></label>
             <input class="form-control"
                    id="userId"
                    name="userId"
                    placeholder="아이디"
-                   th:errorclass="error"
                    th:field="*{userId}"
                    type="text">
         </div>
-        <div class="error" style="margin-left: 3px" th:errors="*{userId}">오류</div>
+        <div class="error" style="margin-left: 3px"
+             th:if="${validationErrors != null and validationErrors.containsKey('userId')}"
+             th:text="${validationErrors.get('userId')}">
+        </div>
+        <div class="error" style="margin-left: 3px"
+             th:if="${duplicateError}"
+             th:text="${duplicateError}">
+        </div>
 
         <div>
             <label for="userPassword"></label>
@@ -29,11 +35,13 @@
                    id="userPassword"
                    name="userPassword"
                    placeholder="비밀번호"
-                   th:errorclass="error"
                    th:field="*{userPassword}"
                    type="text">
         </div>
-        <div class="error" style="margin-left: 3px" th:errors="*{userPassword}">오류</div>
+        <div class="error" style="margin-left: 3px"
+             th:if="${validationErrors != null and validationErrors.containsKey('userPassword')}"
+             th:text="${validationErrors.get('userPassword')}">
+        </div>
 
         <div>
             <label for="userName"></label>
@@ -41,14 +49,17 @@
                    id="userName"
                    name="userName"
                    placeholder="닉네임"
-                   th:errorclass="error"
                    th:field="*{userName}"
                    type="text">
         </div>
-        <div class="error" style="margin-left: 3px" th:errors="*{userName}">오류</div>
+        <div class="error" style="margin-left: 3px"
+             th:if="${validationErrors != null and validationErrors.containsKey('userName')}"
+             th:text="${validationErrors.get('userName')}">
+        </div>
 
         <div class="text-lg-end" style="margin-top: 30px">
             <button class="btn btn-outline-primary"
+                    id="submit"
                     th:onclick="|location.href='@{login}'|"
                     type="submit">가입완료
             </button>
@@ -59,6 +70,17 @@
         </div>
     </form>
     <!--회원가입 입력 폼 끝-->
+
+    <script>
+        document.querySelector('#submit').addEventListener('click', function (e) {
+            if (document.querySelector('#userId').value === ''
+                || document.querySelector('#userPassword').value === '') {
+                e.preventDefault()
+                alert('아이디와 비밀번호, 닉네임은 필수 입력사항입니다.');
+                window.location.href = "/signup.html";
+            }
+        });
+    </script>
 
 </div>
 

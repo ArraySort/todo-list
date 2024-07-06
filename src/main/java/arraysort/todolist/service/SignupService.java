@@ -5,6 +5,7 @@ import arraysort.todolist.domain.UserVO;
 import arraysort.todolist.mapper.SignupMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +22,11 @@ public class SignupService {
     public void createUserService(SignupDto signupDto) {
         String encodedPassword = passwordEncoder.encode(signupDto.getUserPassword());
         signupDto.setUserPassword(encodedPassword);
+
+        if (checkUser(signupDto.getUserId()) != 0) {
+            throw new DuplicateKeyException("아이디 중복");
+        }
+
         UserVO userVO = UserVO.of(signupDto);
         signupMapper.createUser(userVO);
 
