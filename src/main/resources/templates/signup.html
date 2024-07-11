@@ -10,51 +10,34 @@
     <div class="text-center"><h1>회원가입</h1></div>
 
     <!--회원가입 입력 폼 시작-->
-    <form method="post" th:action="@{signup}" th:object="${user}">
+    <form method="post" th:action="@{signup}">
         <div>
             <label for="userId"></label>
             <input class="form-control"
                    id="userId"
                    name="userId"
                    placeholder="아이디"
-                   th:field="*{userId}"
                    type="text">
         </div>
-        <div class="error" style="margin-left: 3px"
-             th:if="${validationErrors != null and validationErrors.containsKey('userId')}"
-             th:text="${validationErrors.get('userId')}">
-        </div>
-        <div class="error" style="margin-left: 3px"
-             th:if="${duplicateError}"
-             th:text="${duplicateError}">
-        </div>
-
         <div>
             <label for="userPassword"></label>
             <input class="form-control"
                    id="userPassword"
                    name="userPassword"
                    placeholder="비밀번호"
-                   th:field="*{userPassword}"
-                   type="text">
+                   type="password">
         </div>
-        <div class="error" style="margin-left: 3px"
-             th:if="${validationErrors != null and validationErrors.containsKey('userPassword')}"
-             th:text="${validationErrors.get('userPassword')}">
-        </div>
-
         <div>
             <label for="userName"></label>
             <input class="form-control"
                    id="userName"
                    name="userName"
                    placeholder="닉네임"
-                   th:field="*{userName}"
                    type="text">
         </div>
-        <div class="error" style="margin-left: 3px"
-             th:if="${validationErrors != null and validationErrors.containsKey('userName')}"
-             th:text="${validationErrors.get('userName')}">
+
+        <div class="alert alert-danger" role="alert" th:if="${duplicateUserError}">
+            <span th:text="${duplicateUserError}"></span>
         </div>
 
         <div class="text-lg-end" style="margin-top: 30px">
@@ -70,19 +53,19 @@
         </div>
     </form>
     <!--회원가입 입력 폼 끝-->
+</div>
 
-    <script>
-        document.querySelector('#submit').addEventListener('click', function (e) {
-            if (document.querySelector('#userId').value === ''
-                || document.querySelector('#userPassword').value === '') {
-                e.preventDefault()
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#submit').on('click', function (e) {
+            if (!($('#userId').val() && $('#userPassword').val())) {
+                e.preventDefault();
                 alert('아이디와 비밀번호, 닉네임은 필수 입력사항입니다.');
-                window.location.href = "/signup.html";
+                location.href = "/signup";
             }
         });
-    </script>
-
-</div>
+    });
+</script>
 
 </body>
 </html>

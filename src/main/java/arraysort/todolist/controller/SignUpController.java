@@ -8,19 +8,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequiredArgsConstructor
+@RequestMapping("/signup")
 public class SignUpController {
 
     private final SignupService signupService;
 
-    @GetMapping("/signup")
+    @GetMapping
     public String signup() {
         return "signup";
     }
 
-    @PostMapping("/signup")
+    @PostMapping
     public String createUserController(@Valid @ModelAttribute("user") SignupDto signupDto) {
         signupService.createUserService(signupDto);
         return "redirect:/login";
