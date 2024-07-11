@@ -12,22 +12,24 @@
     <!--입력 폼 시작-->
     <form action="/login-process" method="post" th:action="@{login-process}">
         <div>
-            <label for="username"></label>
+            <label for="userId"></label>
             <input class="form-control"
-                   id="username"
-                   name="username"
+                   id="userId"
+                   name="userId"
                    placeholder="아이디"
                    type="text">
         </div>
         <div>
-            <label for="password"></label>
+            <label for="userPassword"></label>
             <input class="form-control"
-                   id="password"
-                   name="password"
+                   id="userPassword"
+                   name="userPassword"
                    placeholder="비밀번호"
                    type="password">
         </div>
-        <div class="error" style="margin-left: 3px" th:if="error" th:text="${exception}"></div>
+        <div class="alert alert-danger" role="alert" th:if="${loginError}">
+            <span th:text="${loginError}"></span>
+        </div>
         <!--입력 폼 끝-->
         <!--버튼-->
         <div class="text-lg-end" style="margin-top: 30px">
@@ -37,8 +39,6 @@
             </button>
             <button class="btn btn-outline-primary"
                     id="submit"
-                    onclick="location.href='/todo/list'"
-                    th:onclick="|location.href='@{/todo/list}'|"
                     type="submit">로그인
             </button>
         </div>
@@ -46,13 +46,14 @@
     <!--버튼 끝-->
 </div>
 
-<script>
-    document.querySelector('#submit').addEventListener('click', function (e) {
-        if (document.querySelector('#username').value === ''
-            || document.querySelector('#password').value === '') {
-            e.preventDefault()
-            alert('아이디와 비밀번호를 올바르게 입력해주세요.')
-        }
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#submit').on('click', function (e) {
+            if (!($('#userId').val() && $('#userPassword').val())) {
+                e.preventDefault();
+                alert("아이디와 비밀번호를 올바르게 입력해주세요.");
+            }
+        });
     });
 </script>
 
