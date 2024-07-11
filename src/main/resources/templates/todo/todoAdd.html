@@ -9,69 +9,70 @@
 <div class="container" style="max-width: 500px; margin-top: 100px">
     <div class="text-center"><h1>할 일 추가</h1></div>
 
-    <!--할 일 입력 폼-->
-    <div>
-        <label for="todoTitle"></label>
-        <input class="form-control"
-               id="todoTitle"
-               name="todoTitle"
-               placeholder="제목"
-               type="text">
-    </div>
-    <div>
-        <label for="todoContent"></label>
-        <textarea class="form-control"
-                  id="todoContent"
-                  name="todoContent"
-                  placeholder="내용"
-                  type="text"></textarea>
-    </div>
-    <!--할 일 입력 폼 끝-->
-
-    <!--시작시간, 종료시간 지정-->
-    <div style="margin-top: 30px; margin-bottom: 30px;">
+    <form method="post" th:action="@{/todo/add}">
+        <!--할 일 입력 폼-->
         <div>
-            <form>
-                <label for='startDatetime'>시작 시간</label><input class="form-control" id='startDatetime'
-                                                               type="datetime-local"/>
-            </form>
-            <script>
-                document.getElementById('startDatetime').value = new Date().toISOString().slice(0, 16);
-            </script>
+            <label for="todoTitle"></label>
+            <input class="form-control"
+                   id="todoTitle"
+                   name="todoTitle"
+                   placeholder="제목"
+                   type="text">
         </div>
         <div>
-            <form>
-                <label for='deadlineDatetime'>종료 시간</label><input class="form-control" id='deadlineDatetime'
-                                                                  type="datetime-local"/>
-            </form>
-            <script>
-                document.getElementById('deadlineDatetime').value = new Date().toISOString().slice(0, 16);
-            </script>
+            <label for="todoContent"></label>
+            <textarea class="form-control"
+                      id="todoContent"
+                      name="todoContent"
+                      placeholder="내용"
+                      type="text"></textarea>
         </div>
-    </div>
-    <!--시작시간, 종료시간 지정 종료-->
+        <!--할 일 입력 폼 끝-->
 
-    <!--중요도 설정-->
-    <select aria-label="priority select" class="form-select">
-        <option selected>중요도 설정</option>
-        <option value="5">★★★★★</option>
-        <option value="4">★★★★</option>
-        <option value="3">★★★</option>
-        <option value="2">★★</option>
-        <option value="1">★</option>
-    </select>
-    <!--중요도 설정 종료-->
+        <!--시작시간, 종료시간 지정-->
+        <div style="margin-top: 30px; margin-bottom: 30px;">
+            <div>
+                <label for='todoStart'>시작 시간</label><input class="form-control" id='todoStart'
+                                                           name="todoStart"
+                                                           type="datetime-local"/>
+            </div>
+            <div>
+                <label for='todoEnd'>종료 시간</label><input class="form-control" id='todoEnd' name="todoEnd"
+                                                         type="datetime-local"/>
+            </div>
+        </div>
+        <!--시작시간, 종료시간 지정 종료-->
 
-    <div class="text-lg-end" style="margin-top: 30px">
-        <button class="btn btn-outline-primary"
-                th:onclick="|location.href='@{list}'|">목록
-        </button>
-        <button class="btn btn-outline-primary"
-                th:onclick="|location.href='@{list}'|">저장
-        </button>
-    </div>
-
+        <!--중요도 설정-->
+        <select aria-label="priority select" class="form-select" name="todoPriority">
+            <option selected>중요도 설정</option>
+            <option value="5">★★★★★</option>
+            <option value="4">★★★★</option>
+            <option value="3">★★★</option>
+            <option value="2">★★</option>
+            <option value="1">★</option>
+        </select>
+        <!--중요도 설정 종료-->
+        
+        <div class="text-lg-end" style="margin-top: 30px">
+            <button class="btn btn-outline-primary"
+                    th:onclick="|location.href='@{list}'|"
+                    type="button">목록
+            </button>
+            <button class="btn btn-outline-primary"
+                    th:onclick="|location.href='@{list}'|"
+                    type="submit">저장
+            </button>
+        </div>
+    </form>
 </div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#todoStart').val(new Date().toISOString().slice(0, 16));
+        $('#todoEnd').val(new Date().toISOString().slice(0, 16));
+    });
+</script>
 
 </body>
 </html>
