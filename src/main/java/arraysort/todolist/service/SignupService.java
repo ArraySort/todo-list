@@ -20,20 +20,13 @@ public class SignupService {
 
     @Transactional
     public void createUserService(SignupDto signupDto) {
-        String encodedPassword = passwordEncoder.encode(signupDto.getUserPassword());
-        signupDto.setUserPassword(encodedPassword);
 
-        if (checkUser(signupDto.getUserId()) != 0) {
+        if (signupMapper.checkUser(signupDto.getUserId()) != 0) {
             throw new DuplicateKeyException("아이디 중복");
         }
 
+        signupDto.encodePassword(passwordEncoder.encode(signupDto.getUserPassword()));
         UserVO userVO = UserVO.of(signupDto);
         signupMapper.createUser(userVO);
-
-    }
-
-    @Transactional
-    public int checkUser(String userId) {
-        return signupMapper.checkUser(userId);
     }
 }

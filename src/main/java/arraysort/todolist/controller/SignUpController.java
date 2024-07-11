@@ -5,7 +5,6 @@ import arraysort.todolist.service.SignupService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,8 +16,7 @@ public class SignUpController {
     private final SignupService signupService;
 
     @GetMapping("/signup")
-    public String signup(Model model) {
-        model.addAttribute("user", new SignupDto());
+    public String signup() {
         return "signup";
     }
 
