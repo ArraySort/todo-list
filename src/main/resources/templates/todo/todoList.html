@@ -6,7 +6,6 @@
 
 <body>
 
-
 <div class="container" style="max-width: 800px; margin-top: 10px;">
     <div class="py-5 text-center"><h2>USER's TODO LIST</h2></div>
 
@@ -21,10 +20,11 @@
                 </button>
             </div>
         </div>
+        <!--일정 등록 버튼 끝-->
 
         <hr class="my-4">
 
-        <!--테이블 시작 TODO:페이징 방식으로 변경-->
+        <!--리스트 테이블-->
         <div style="height: 400px; overflow-y: auto">
             <table class="table">
                 <thead>
@@ -37,21 +37,14 @@
                     <th>status</th>
                 </tr>
                 </thead>
-
                 <tbody>
                 <tr th:each="list : ${lists}">
-
                     <td th:text="${list.userId}"></td>
-
                     <td><a href="todoDetail.html" th:href="@{/todo/list/{todoId}(todoId=${list.getTodoId()})}"
                            th:text="${list.todoTitle}"></a></td>
-
                     <td th:text="${list.todoStart}">2024-07-02</td>
-
                     <td th:text="${list.todoEnd}">2024-07-03</td>
-
                     <td th:text="${list.todoPriority}">★★★★★</td>
-
                     <td>
                         <div class="form-check">
                             <label class="form-check-label" for="flexCheckDefault">
@@ -61,19 +54,20 @@
                     </td>
                 </tr>
                 </tbody>
-
             </table>
-            <!--테이블 종료-->
+            <!--리스트 테이블 종료-->
         </div>
 
         <hr class="my-4">
 
+        <!--로그아웃 버튼-->
         <div class="text-lg-end" style="margin-top: 30px">
             <button class="btn btn-outline-primary"
                     th:onclick="|location.href='@{/login}'|"
                     type="submit">로그아웃
             </button>
         </div>
+        <!--로그아웃 버튼 끝-->
     </form>
 </div>
 

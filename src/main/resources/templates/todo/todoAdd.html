@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head th:replace="~{fragments/configFragment :: ConfigFragment}">
-    <title>Title</title>
+    <title>Add</title>
 </head>
 
 <body>
@@ -11,7 +11,7 @@
 
     <form method="post" th:action="@{/todo/add}">
         <input name="todoId" type="hidden" value="0"/>
-        <!--할 일 입력 폼-->
+        <!--제목 내용 입력-->
         <div>
             <label for="todoTitle"></label>
             <input class="form-control"
@@ -28,9 +28,9 @@
                       placeholder="내용"
                       type="text"></textarea>
         </div>
-        <!--할 일 입력 폼 끝-->
+        <!--제목 내용 입력 끝-->
 
-        <!--시작시간, 종료시간 지정-->
+        <!--시작시간 종료시간 지정-->
         <div style="margin-top: 30px; margin-bottom: 30px;">
             <div>
                 <label for='todoStart'>시작 시간</label>
@@ -42,7 +42,7 @@
             </div>
         </div>
 
-        <!--시작시간, 종료시간 지정 종료-->
+        <!--시작시간 종료시간 지정 끝-->
 
         <!--중요도 설정-->
         <select aria-label="priority select" class="form-select" name="todoPriority">
@@ -53,8 +53,9 @@
             <option value="2">★★</option>
             <option value="1">★</option>
         </select>
-        <!--중요도 설정 종료-->
+        <!--중요도 설정 끝-->
 
+        <!--목록 저장 버튼-->
         <div class="text-lg-end" style="margin-top: 30px">
             <button class="btn btn-outline-primary"
                     th:onclick="|location.href='@{list}'|"
@@ -65,6 +66,7 @@
                     type="submit">저장
             </button>
         </div>
+        <!--목록 저장 버튼 끝-->
     </form>
 </div>
 

@@ -9,8 +9,9 @@
 <div class="container" style="max-width: 500px; margin-top: 100px">
 
     <div class="text-center"><h1>로그인 페이지</h1></div>
-    <!--입력 폼 시작-->
+
     <form action="/login-process" method="post" th:action="@{login-process}">
+        <!--아이디 비밀번호 입력-->
         <div>
             <label for="userId"></label>
             <input class="form-control"
@@ -30,7 +31,8 @@
         <div class="alert alert-danger" role="alert" th:if="${loginError}">
             <span th:text="${loginError}"></span>
         </div>
-        <!--입력 폼 끝-->
+        <!--아이디 비밀번호 입력 끝-->
+
         <!--버튼-->
         <div class="text-lg-end" style="margin-top: 30px">
             <button class="btn btn-outline-primary"
@@ -42,8 +44,8 @@
                     type="submit">로그인
             </button>
         </div>
+        <!--버튼 끝-->
     </form>
-    <!--버튼 끝-->
 </div>
 
 <script type="text/javascript">

@@ -9,7 +9,7 @@
 <div class="container" style="max-width: 500px; margin-top: 100px">
     <div class="text-center"><h1>할 일 수정</h1></div>
 
-    <!--할 일 수정 입력 폼-->
+    <!--제목 내용 입력-->
     <div>
         <label for="todoTitle"></label>
         <input class="form-control"
@@ -26,30 +26,20 @@
                   placeholder="내용"
                   type="text"></textarea>
     </div>
-    <!--할 일 수정 입력 폼 끝-->
+    <!--제목 내용 입력 끝-->
 
-    <!--시작시간, 종료시간 지정-->
+    <!--시작시간 종료시간 지정-->
     <div style="margin-top: 30px; margin-bottom: 30px;">
         <div>
-            <form>
-                <label for='startDatetime'>시작 시간</label><input class="form-control" id='startDatetime'
-                                                               type="datetime-local"/>
-            </form>
-            <script>
-                document.getElementById('startDatetime').value = new Date().toISOString().slice(0, 16);
-            </script>
+            <label for='startDatetime'>시작 시간</label>
+            <input class="form-control" id='startDatetime' type="datetime-local"/>
         </div>
         <div>
-            <form>
-                <label for='deadlineDatetime'>종료 시간</label><input class="form-control" id='deadlineDatetime'
-                                                                  type="datetime-local"/>
-            </form>
-            <script>
-                document.getElementById('deadlineDatetime').value = new Date().toISOString().slice(0, 16);
-            </script>
+            <label for='deadlineDatetime'>종료 시간</label>
+            <input class="form-control" id='deadlineDatetime' type="datetime-local"/>
         </div>
     </div>
-    <!--시작시간, 종료시간 지정 종료-->
+    <!--시작시간 종료시간 지정 끝-->
 
     <!--중요도 설정-->
     <select aria-label="priority select" class="form-select">
@@ -60,8 +50,9 @@
         <option value="2">★★</option>
         <option value="1">★</option>
     </select>
-    <!--중요도 설정 종료-->
+    <!--중요도 설정 끝-->
 
+    <!--취소 저장 버튼-->
     <div class="text-lg-end" style="margin-top: 30px">
         <button class="btn btn-outline-primary"
                 th:onclick="|location.href='@{detail}'|">취소
@@ -70,9 +61,15 @@
                 th:onclick="|location.href='@{list}'|">저장
         </button>
     </div>
-
+    <!--취소 저장 버튼 끝-->
 </div>
-<!--할 일 수정 입력 폼 끝-->
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#todoStart').val(new Date().toISOString().slice(0, 16));
+        $('#todoEnd').val(new Date().toISOString().slice(0, 16));
+    });
+</script>
 
 </body>
 </html>

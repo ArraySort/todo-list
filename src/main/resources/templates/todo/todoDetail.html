@@ -9,7 +9,7 @@
 <div class="container" style="max-width: 500px; margin-top: 100px">
     <div class="text-center"><h1>일정 수정하기</h1></div>
 
-    <!--수정사항 입력 폼-->
+    <!--제목 내용-->
     <div>
         <label for="todoTitle"></label>
         <input class="form-control"
@@ -30,9 +30,9 @@
                   th:text="${details.todoContent}"
                   type="text"></textarea>
     </div>
-    <!--수정사항 입력 폼 끝-->
+    <!--제목 내용 끝-->
 
-    <!--시작시간, 종료시간 지정-->
+    <!--시작시간 종료시간-->
     <div style="margin-top: 30px; margin-bottom: 30px;">
         <div>
             <form>
@@ -51,7 +51,7 @@
             </form>
         </div>
     </div>
-    <!--시작시간, 종료시간 지정 종료-->
+    <!--시작시간 종료시간 끝-->
 
     <!--중요도 설정-->
     <select aria-label="priority select" class="form-select" disabled>
@@ -62,8 +62,9 @@
         <option value="2">★★</option>
         <option value="1">★</option>
     </select>
-    <!--중요도 설정 종료-->
+    <!--중요도 설정 끝-->
 
+    <!--목록 수정 삭제 버튼-->
     <div class="text-lg-end" style="margin-top: 30px">
         <button class="btn btn-outline-primary"
                 th:onclick="|location.href='@{/todo/list}'|">목록
@@ -77,7 +78,7 @@
                 th:onclick="|location.href='@{list}'|">삭제
         </button>
     </div>
-    <!--수정사항 입력 폼 끝-->
+    <!--목록 수정 삭제 버튼 끝-->
 
 </div>
 
