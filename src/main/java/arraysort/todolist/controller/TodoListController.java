@@ -1,17 +1,16 @@
 package arraysort.todolist.controller;
 
-import arraysort.todolist.domain.TodoDto;
+import arraysort.todolist.domain.TodoListDto;
 import arraysort.todolist.service.TodoListService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequiredArgsConstructor
+@Slf4j
 @RequestMapping("/todo")
 public class TodoListController {
 
@@ -32,21 +31,24 @@ public class TodoListController {
 
     // 일정 등록
     @PostMapping("/add")
-    public String todoAdd(@ModelAttribute TodoDto todoDto) {
-        todoListService.createTodoService(todoDto);
+    public String todoAdd(@ModelAttribute TodoListDto todoListDto) {
+        todoListService.createTodoService(todoListDto);
         return "redirect:/todo/list";
+    }
+
+    // 일정 상세조회
+    @GetMapping("/list/{todoId}")
+    public String todoDetail(@PathVariable int todoId, Model model) {
+        log.info("todoDetail.Controller={}", todoId);
+        log.info("todoDetail.Controller={}", todoListService.getTodoDetailByTodoIdService(todoId).getTodoContent());
+        model.addAttribute("details", todoListService.getTodoDetailByTodoIdService(todoId));
+        return "todo/todoDetail";
     }
 
     // 일정 수정 버튼
     @GetMapping("/edit")
     public String todoEdit() {
         return "todo/todoEdit";
-    }
-
-    // 일정 눌렀을 때
-    @GetMapping("/detail")
-    public String returnTodo() {
-        return "todo/todoDetail";
     }
 
     // 로그아웃

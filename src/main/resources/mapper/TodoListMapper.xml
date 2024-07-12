@@ -36,4 +36,17 @@
         where user_id = #{userId};
     </select>
 
+    <select id="getDetailByTodoId" resultType="arraysort.todolist.domain.TodoVO">
+        select todo_id,
+               user_id,
+               todo_title,
+               todo_content,
+               todo_start,
+               todo_end,
+               todo_priority,
+               todo_done
+        from todo
+        where todo_id = #{todoId}
+    </select>
+
 </mapper>

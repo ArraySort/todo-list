@@ -9,6 +9,8 @@ import java.util.List;
 public interface TodoListMapper {
 
     void createTodo(TodoVO todoVO);
-    
+
     List<TodoVO> getListByUserId(String userId);
+
+    TodoVO getDetailByTodoId(int todoId);
 }

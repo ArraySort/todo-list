@@ -29,7 +29,7 @@
             <table class="table">
                 <thead>
                 <tr>
-                    <th>#</th>
+                    <th>작성자</th>
                     <th>TODO</th>
                     <th>Start</th>
                     <th>DeadLine</th>
@@ -40,11 +40,18 @@
 
                 <tbody>
                 <tr th:each="list : ${lists}">
-                    <td>1</td>
-                    <td><a th:href="@{detail}" th:text="${list.todoTitle}"></a></td>
+
+                    <td th:text="${list.userId}"></td>
+
+                    <td><a href="todoDetail.html" th:href="@{/todo/list/{todoId}(todoId=${list.getTodoId()})}"
+                           th:text="${list.todoTitle}"></a></td>
+
                     <td th:text="${list.todoStart}">2024-07-02</td>
+
                     <td th:text="${list.todoEnd}">2024-07-03</td>
+
                     <td th:text="${list.todoPriority}">★★★★★</td>
+
                     <td>
                         <div class="form-check">
                             <label class="form-check-label" for="flexCheckDefault">

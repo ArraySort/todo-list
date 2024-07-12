@@ -23,15 +23,15 @@ public class TodoVO {
 
     private Boolean todoDone;
 
-    public static TodoVO of(TodoDto todoDto) {
+    public static TodoVO create(TodoListDto todoListDto) {
         return TodoVO.builder()
-                .userId(todoDto.getUserId())
-                .todoTitle(todoDto.getTodoTitle())
-                .todoContent(todoDto.getTodoContent())
-                .todoStart(todoDto.getTodoStart())
-                .todoEnd(todoDto.getTodoEnd())
-                .todoPriority(todoDto.getTodoPriority())
-                .todoDone(todoDto.getTodoDone())
+                .userId(todoListDto.getUserId())
+                .todoTitle(todoListDto.getTodoTitle())
+                .todoContent(todoListDto.getTodoContent())
+                .todoStart(todoListDto.getTodoStart())
+                .todoEnd(todoListDto.getTodoEnd())
+                .todoPriority(todoListDto.getTodoPriority())
+                .todoDone(todoListDto.getTodoDone())
                 .build();
     }
 }

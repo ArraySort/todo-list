@@ -10,6 +10,7 @@
     <div class="text-center"><h1>할 일 추가</h1></div>
 
     <form method="post" th:action="@{/todo/add}">
+        <input name="todoId" type="hidden" value="0"/>
         <!--할 일 입력 폼-->
         <div>
             <label for="todoTitle"></label>
@@ -32,15 +33,15 @@
         <!--시작시간, 종료시간 지정-->
         <div style="margin-top: 30px; margin-bottom: 30px;">
             <div>
-                <label for='todoStart'>시작 시간</label><input class="form-control" id='todoStart'
-                                                           name="todoStart"
-                                                           type="datetime-local"/>
+                <label for='todoStart'>시작 시간</label>
+                <input class="form-control" id='todoStart' name="todoStart" type="datetime-local"/>
             </div>
             <div>
-                <label for='todoEnd'>종료 시간</label><input class="form-control" id='todoEnd' name="todoEnd"
-                                                         type="datetime-local"/>
+                <label for='todoEnd'>종료 시간</label>
+                <input class="form-control" id='todoEnd' name="todoEnd" type="datetime-local"/>
             </div>
         </div>
+
         <!--시작시간, 종료시간 지정 종료-->
 
         <!--중요도 설정-->
@@ -53,7 +54,7 @@
             <option value="1">★</option>
         </select>
         <!--중요도 설정 종료-->
-        
+
         <div class="text-lg-end" style="margin-top: 30px">
             <button class="btn btn-outline-primary"
                     th:onclick="|location.href='@{list}'|"
