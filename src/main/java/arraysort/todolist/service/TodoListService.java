@@ -4,10 +4,9 @@ import arraysort.todolist.domain.TodoEditDto;
 import arraysort.todolist.domain.TodoListDto;
 import arraysort.todolist.domain.TodoVO;
 import arraysort.todolist.mapper.TodoListMapper;
+import arraysort.todolist.utils.UserUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,20 +21,14 @@ public class TodoListService {
 
     @Transactional
     public void createTodoService(TodoListDto todoListDto) {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String userId = ((UserDetails) principal).getUsername();
-        todoListDto.updateUserId(userId);
-        todoListDto.updateTodoDone(false);
+        todoListDto.updateUserId(UserUtil.getCurrentLoginUserId());
         TodoVO todoVO = TodoVO.create(todoListDto);
-
         todoListMapper.createTodo(todoVO);
     }
 
     @Transactional(readOnly = true)
     public List<TodoListDto> getListByUserIdService() {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String userId = ((UserDetails) principal).getUsername();
-        List<TodoVO> todoList = todoListMapper.getListByUserId(userId);
+        List<TodoVO> todoList = todoListMapper.getListByUserId(UserUtil.getCurrentLoginUserId());
 
         return todoList.stream()
                 .map(TodoListDto::list)

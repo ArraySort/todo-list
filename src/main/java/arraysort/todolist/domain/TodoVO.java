@@ -24,6 +24,7 @@ public class TodoVO {
     private Boolean todoDone;
 
     public static TodoVO create(TodoListDto todoListDto) {
+        todoListDto.updateTodoDone(false);
         return TodoVO.builder()
                 .userId(todoListDto.getUserId())
                 .todoTitle(todoListDto.getTodoTitle())
