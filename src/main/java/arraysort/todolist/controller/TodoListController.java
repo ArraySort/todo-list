@@ -3,14 +3,12 @@ package arraysort.todolist.controller;
 import arraysort.todolist.domain.TodoListDto;
 import arraysort.todolist.service.TodoListService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequiredArgsConstructor
-@Slf4j
 @RequestMapping("/todo")
 public class TodoListController {
 
@@ -39,8 +37,6 @@ public class TodoListController {
     // 일정 상세조회
     @GetMapping("/list/{todoId}")
     public String todoDetail(@PathVariable int todoId, Model model) {
-        log.info("todoDetail.Controller={}", todoId);
-        log.info("todoDetail.Controller={}", todoListService.getTodoDetailByTodoIdService(todoId).getTodoContent());
         model.addAttribute("details", todoListService.getTodoDetailByTodoIdService(todoId));
         return "todo/todoDetail";
     }

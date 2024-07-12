@@ -8,13 +8,13 @@ import lombok.Getter;
 @AllArgsConstructor
 public class SignupDto {
 
-    @NotBlank(message = "필수 입력값입니다.")
+    @NotBlank
     private String userId;
 
-    @NotBlank(message = "필수 입력값입니다.")
+    @NotBlank
     private String userPassword;
 
-    @NotBlank(message = "필수 입력값입니다.")
+    @NotBlank
     private String userName;
 
     public void encodePassword(String userPassword) {
