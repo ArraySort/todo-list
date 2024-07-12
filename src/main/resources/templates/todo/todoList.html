@@ -10,7 +10,7 @@
 <div class="container" style="max-width: 800px; margin-top: 10px;">
     <div class="py-5 text-center"><h2>USER's TODO LIST</h2></div>
 
-    <form action="login-process" method="post" th:action="@{logout-process}">
+    <form action="login-process" method="post" th:action="@{logout-process}" th:object="${lists}">
         <!--일정 등록 버튼-->
         <div class="row">
             <div class="col">
@@ -39,17 +39,16 @@
                 </thead>
 
                 <tbody>
-                <tr>
-                    <!--예시 : 테스트-->
+                <tr th:each="list : ${lists}">
                     <td>1</td>
-                    <td><a th:href="@{detail}">해야할 일</a></td>
-                    <td>2024-07-02</td>
-                    <td>2024-07-03</td>
-                    <td>★★★★★</td>
+                    <td><a th:href="@{detail}" th:text="${list.todoTitle}"></a></td>
+                    <td th:text="${list.todoStart}">2024-07-02</td>
+                    <td th:text="${list.todoEnd}">2024-07-03</td>
+                    <td th:text="${list.todoPriority}">★★★★★</td>
                     <td>
                         <div class="form-check">
-                            <input class="form-check-input" id="flexCheckDefault" type="checkbox" value="">
                             <label class="form-check-label" for="flexCheckDefault">
+                                <input class="form-check-input" id="flexCheckDefault" type="checkbox" value="">
                             </label>
                         </div>
                     </td>

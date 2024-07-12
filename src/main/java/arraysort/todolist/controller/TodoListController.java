@@ -3,8 +3,8 @@ package arraysort.todolist.controller;
 import arraysort.todolist.domain.TodoDto;
 import arraysort.todolist.service.TodoListService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,31 +12,30 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequiredArgsConstructor
-@Slf4j
 @RequestMapping("/todo")
 public class TodoListController {
 
     private final TodoListService todoListService;
 
-    // 로그인 버튼
+    // 할 일 목록
     @GetMapping("/list")
-    public String todolist() {
+    public String todolist(Model model) {
+        model.addAttribute("lists", todoListService.getListByUserIdService());
         return "todo/todoList";
     }
 
-    // 일정 등록 버튼
+    // 일정 등록 폼
     @GetMapping("/add")
     public String todoAddForm() {
         return "todo/todoAdd";
     }
 
+    // 일정 등록
     @PostMapping("/add")
     public String todoAdd(@ModelAttribute TodoDto todoDto) {
-        log.info("todoDto={}", todoDto.getTodoTitle());
-        todoListService.createTodo(todoDto);
+        todoListService.createTodoService(todoDto);
         return "todo/todoList";
     }
-
 
     // 일정 수정 버튼
     @GetMapping("/edit")
@@ -50,6 +49,7 @@ public class TodoListController {
         return "todo/todoDetail";
     }
 
+    // 로그아웃
     @PostMapping("/logout-process")
     public String logoutProcess() {
         return "login";

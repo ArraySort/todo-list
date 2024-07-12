@@ -7,6 +7,8 @@ import lombok.Getter;
 @Builder
 public class TodoVO {
 
+    private int todoId;
+
     private String userId;
 
     private String todoTitle;
