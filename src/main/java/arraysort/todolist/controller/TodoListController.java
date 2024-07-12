@@ -34,7 +34,7 @@ public class TodoListController {
     @PostMapping("/add")
     public String todoAdd(@ModelAttribute TodoDto todoDto) {
         todoListService.createTodoService(todoDto);
-        return "todo/todoList";
+        return "redirect:/todo/list";
     }
 
     // 일정 수정 버튼

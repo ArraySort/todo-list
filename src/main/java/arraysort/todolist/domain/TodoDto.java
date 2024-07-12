@@ -2,10 +2,8 @@ package arraysort.todolist.domain;
 
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
-@Setter
 @Builder
 public class TodoDto {
 
@@ -21,20 +19,24 @@ public class TodoDto {
 
     private int todoPriority;
 
-    private boolean todoDone;
+    private Boolean todoDone;
 
     public static TodoDto of(TodoVO todoVO) {
         return TodoDto.builder()
                 .todoTitle(todoVO.getTodoTitle())
                 .todoContent(todoVO.getTodoContent())
-                .todoStart(todoVO.getTodoEnd())
+                .todoStart(todoVO.getTodoStart())
                 .todoEnd(todoVO.getTodoEnd())
                 .todoPriority(todoVO.getTodoPriority())
-                .todoDone(todoVO.isTodoDone())
+                .todoDone(todoVO.getTodoDone())
                 .build();
     }
 
     public void updateUserId(String userId) {
         this.userId = userId;
+    }
+
+    public void updateTodoDone(boolean todoDone) {
+        this.todoDone = todoDone;
     }
 }

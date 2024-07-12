@@ -22,8 +22,9 @@ public class TodoListService {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String userId = ((UserDetails) principal).getUsername();
         todoDto.updateUserId(userId);
+        todoDto.updateTodoDone(false);
         TodoVO todoVO = TodoVO.of(todoDto);
-        
+
         todoListMapper.createTodo(todoVO);
     }
 
@@ -32,6 +33,7 @@ public class TodoListService {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String userId = ((UserDetails) principal).getUsername();
         List<TodoVO> todoList = todoListMapper.getListByUserId(userId);
+
 
         return todoList.stream()
                 .map(TodoDto::of)

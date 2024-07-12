@@ -21,7 +21,7 @@ public class TodoVO {
 
     private int todoPriority;
 
-    private boolean todoDone;
+    private Boolean todoDone;
 
     public static TodoVO of(TodoDto todoDto) {
         return TodoVO.builder()
@@ -31,7 +31,7 @@ public class TodoVO {
                 .todoStart(todoDto.getTodoStart())
                 .todoEnd(todoDto.getTodoEnd())
                 .todoPriority(todoDto.getTodoPriority())
-                .todoDone(todoDto.isTodoDone())
+                .todoDone(todoDto.getTodoDone())
                 .build();
     }
 }
