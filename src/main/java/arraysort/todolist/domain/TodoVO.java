@@ -35,4 +35,12 @@ public class TodoVO {
                 .todoDone(todoListDto.getTodoDone())
                 .build();
     }
+
+    public void update(TodoUpdateDto todoUpdateDto) {
+        this.todoTitle = todoUpdateDto.getTodoTitle();
+        this.todoContent = todoUpdateDto.getTodoContent();
+        this.todoStart = todoUpdateDto.getTodoStart();
+        this.todoEnd = todoUpdateDto.getTodoEnd();
+        this.todoPriority = todoUpdateDto.getTodoPriority();
+    }
 }

@@ -2,6 +2,7 @@ package arraysort.todolist.mapper;
 
 import arraysort.todolist.domain.TodoVO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -13,4 +14,6 @@ public interface TodoListMapper {
     List<TodoVO> getListByUserId(String userId);
 
     TodoVO getDetailByTodoId(int todoId);
+
+    void updateTodo(@Param("todoId") int todoId, @Param("updateTodoVO") TodoVO todoVO);
 }

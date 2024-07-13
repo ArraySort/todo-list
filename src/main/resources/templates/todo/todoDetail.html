@@ -35,26 +35,24 @@
     <!--시작시간 종료시간-->
     <div style="margin-top: 30px; margin-bottom: 30px;">
         <div>
-            <form>
-                <label for='startDatetime'>시작 시간</label>
-                <input class="form-control" id='startDatetime' readonly
-                       th:value="${details.todoStart}"
-                       type="datetime-local"/>
-            </form>
+            <label for='startDatetime'>시작 시간</label>
+            <input class="form-control" id='startDatetime' name="todoStart"
+                   readonly
+                   th:value="${details.todoStart}"
+                   type="datetime-local"/>
         </div>
         <div>
-            <form>
-                <label for='deadlineDatetime'>종료 시간</label>
-                <input class="form-control" id='deadlineDatetime' readonly
-                       th:value="${details.todoEnd}"
-                       type="datetime-local"/>
-            </form>
+            <label for='deadlineDatetime'>종료 시간</label>
+            <input class="form-control" id='deadlineDatetime' name="todoEnd"
+                   readonly
+                   th:value="${details.todoEnd}"
+                   type="datetime-local"/>
         </div>
     </div>
     <!--시작시간 종료시간 끝-->
 
     <!--중요도 설정-->
-    <select aria-label="priority select" class="form-select" disabled>
+    <select aria-label="priority select" class="form-select" disabled name="todoPriority">
         <option selected th:text="${details.todoPriority}">중요도 설정</option>
         <option value="5">★★★★★</option>
         <option value="4">★★★★</option>
@@ -71,7 +69,8 @@
         </button>
 
         <button class="btn btn-outline-primary"
-                th:onclick="|location.href='@{edit}'|">수정
+                th:onclick="|location.href='@{/todo/list/{todoId}/edit(todoId=${details.todoId})}'|"
+                type="button">수정
         </button>
 
         <button class="btn btn-outline-primary"

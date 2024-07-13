@@ -49,4 +49,14 @@
         where todo_id = #{todoId}
     </select>
 
+    <update id="updateTodo" parameterType="arraysort.todolist.domain.TodoVO">
+        update todo
+        set todo_title    = #{updateTodoVO.todoTitle},
+            todo_content  = #{updateTodoVO.todoContent},
+            todo_start    = #{updateTodoVO.todoStart},
+            todo_end      = #{updateTodoVO.todoEnd},
+            todo_priority = #{updateTodoVO.todoPriority}
+        where todo_id = #{todoId}
+    </update>
+
 </mapper>

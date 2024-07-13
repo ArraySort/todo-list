@@ -10,58 +10,65 @@
     <div class="text-center"><h1>할 일 수정</h1></div>
 
     <!--제목 내용 입력-->
-    <div>
-        <label for="todoTitle"></label>
-        <input class="form-control"
-               id="todoTitle"
-               name="todoTitle"
-               placeholder="제목"
-               type="text">
-    </div>
-    <div>
-        <label for="todoContent"></label>
-        <textarea class="form-control"
-                  id="todoContent"
-                  name="todoContent"
-                  placeholder="내용"
-                  type="text"></textarea>
-    </div>
-    <!--제목 내용 입력 끝-->
-
-    <!--시작시간 종료시간 지정-->
-    <div style="margin-top: 30px; margin-bottom: 30px;">
+    <form method="post" th:action="@{/todo/list/{todoId}/edit(todoId=${update.todoId})}" th:object="${update}">
         <div>
-            <label for='startDatetime'>시작 시간</label>
-            <input class="form-control" id='startDatetime' type="datetime-local"/>
+            <label for="todoTitle"></label>
+            <input class="form-control"
+                   id="todoTitle"
+                   name="todoTitle"
+                   placeholder="제목"
+                   th:value="${update.todoTitle}"
+                   type="text">
         </div>
         <div>
-            <label for='deadlineDatetime'>종료 시간</label>
-            <input class="form-control" id='deadlineDatetime' type="datetime-local"/>
+            <label for="todoContent"></label>
+            <textarea class="form-control"
+                      id="todoContent"
+                      name="todoContent"
+                      placeholder="내용"
+                      th:text="${update.todoContent}"
+                      type="text"></textarea>
         </div>
-    </div>
-    <!--시작시간 종료시간 지정 끝-->
+        <!--제목 내용 입력 끝-->
 
-    <!--중요도 설정-->
-    <select aria-label="priority select" class="form-select">
-        <option selected>중요도 설정</option>
-        <option value="5">★★★★★</option>
-        <option value="4">★★★★</option>
-        <option value="3">★★★</option>
-        <option value="2">★★</option>
-        <option value="1">★</option>
-    </select>
-    <!--중요도 설정 끝-->
+        <!--시작시간 종료시간 지정-->
+        <div style="margin-top: 30px; margin-bottom: 30px;">
+            <div>
+                <label for='startDatetime'>시작 시간</label>
+                <input class="form-control" id='startDatetime' name="todoStart" th:value="${update.todoStart}"
+                       type="datetime-local"/>
+            </div>
+            <div>
+                <label for='deadlineDatetime'>종료 시간</label>
+                <input class="form-control" id='deadlineDatetime' name="todoEnd" th:value="${update.todoEnd}"
+                       type="datetime-local"/>
+            </div>
+        </div>
+        <!--시작시간 종료시간 지정 끝-->
 
-    <!--취소 저장 버튼-->
-    <div class="text-lg-end" style="margin-top: 30px">
-        <button class="btn btn-outline-primary"
-                th:onclick="|location.href='@{detail}'|">취소
-        </button>
-        <button class="btn btn-outline-primary"
-                th:onclick="|location.href='@{list}'|">저장
-        </button>
-    </div>
-    <!--취소 저장 버튼 끝-->
+        <!--중요도 설정-->
+        <select aria-label="priority select" class="form-select" name="todoPriority" th:value="${update.todoPriority}">
+            <option selected th:text="${update.todoPriority}">중요도 설정</option>
+            <option value="5">★★★★★</option>
+            <option value="4">★★★★</option>
+            <option value="3">★★★</option>
+            <option value="2">★★</option>
+            <option value="1">★</option>
+        </select>
+        <!--중요도 설정 끝-->
+
+        <!--취소 저장 버튼-->
+        <div class="text-lg-end" style="margin-top: 30px">
+            <button class="btn btn-outline-primary"
+                    th:onclick="|location.href='@{/todo/list/{todoId}(todoId=${update.todoId})}'|"
+                    type="button">취소
+            </button>
+            <button class="btn btn-outline-primary"
+                    type="submit">저장
+            </button>
+        </div>
+        <!--취소 저장 버튼 끝-->
+    </form>
 </div>
 
 <script type="text/javascript">

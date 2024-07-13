@@ -1,6 +1,7 @@
 package arraysort.todolist.controller;
 
 import arraysort.todolist.domain.TodoListDto;
+import arraysort.todolist.domain.TodoUpdateDto;
 import arraysort.todolist.service.TodoListService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -21,7 +22,7 @@ public class TodoListController {
         return "todo/todoList";
     }
 
-    // 일정 등록 폼
+    // 일정 입력
     @GetMapping("/add")
     public String todoAddForm() {
         return "todo/todoAdd";
@@ -41,10 +42,18 @@ public class TodoListController {
         return "todo/todoDetail";
     }
 
-    // 일정 수정 버튼
-    @GetMapping("/edit")
-    public String todoEdit() {
+    // 일정 수정
+    @GetMapping("/list/{todoId}/edit")
+    public String todoEditForm(@PathVariable int todoId, Model model) {
+        model.addAttribute("update", todoListService.getTodoDetailByTodoIdService(todoId));
         return "todo/todoEdit";
+    }
+
+    // 일정 저장
+    @PostMapping("/list/{todoId}/edit")
+    public String todoEdit(@PathVariable int todoId, @ModelAttribute("update") TodoUpdateDto todoUpdateDto) {
+        todoListService.updateTodoService(todoId, todoUpdateDto);
+        return "redirect:/todo/list/{todoId}";
     }
 
     // 로그아웃

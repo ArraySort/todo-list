@@ -2,6 +2,7 @@ package arraysort.todolist.service;
 
 import arraysort.todolist.domain.TodoEditDto;
 import arraysort.todolist.domain.TodoListDto;
+import arraysort.todolist.domain.TodoUpdateDto;
 import arraysort.todolist.domain.TodoVO;
 import arraysort.todolist.mapper.TodoListMapper;
 import arraysort.todolist.utils.UserUtil;
@@ -38,5 +39,12 @@ public class TodoListService {
     @Transactional(readOnly = true)
     public TodoEditDto getTodoDetailByTodoIdService(int todoId) {
         return TodoEditDto.edit(todoListMapper.getDetailByTodoId(todoId));
+    }
+
+    @Transactional
+    public void updateTodoService(int todoId, TodoUpdateDto todoUpdateDto) {
+        TodoVO todoVO = todoListMapper.getDetailByTodoId(todoId);
+        todoVO.update(todoUpdateDto);
+        todoListMapper.updateTodo(todoId, todoVO);
     }
 }
