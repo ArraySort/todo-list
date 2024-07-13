@@ -59,4 +59,10 @@
         where todo_id = #{todoId}
     </update>
 
+    <delete id="deleteTodo">
+        delete
+        from todo
+        where todo_id = #{todoId}
+    </delete>
+
 </mapper>

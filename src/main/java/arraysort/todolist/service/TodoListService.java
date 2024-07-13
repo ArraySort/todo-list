@@ -7,14 +7,12 @@ import arraysort.todolist.domain.TodoVO;
 import arraysort.todolist.mapper.TodoListMapper;
 import arraysort.todolist.utils.UserUtil;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @RequiredArgsConstructor
-@Slf4j
 @Service
 public class TodoListService {
 
@@ -46,5 +44,10 @@ public class TodoListService {
         TodoVO todoVO = todoListMapper.getDetailByTodoId(todoId);
         todoVO.update(todoUpdateDto);
         todoListMapper.updateTodo(todoId, todoVO);
+    }
+
+    @Transactional
+    public void deleteTodoService(int todoId) {
+        todoListMapper.deleteTodo(todoId);
     }
 }

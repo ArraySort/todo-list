@@ -16,4 +16,6 @@ public interface TodoListMapper {
     TodoVO getDetailByTodoId(int todoId);
 
     void updateTodo(@Param("todoId") int todoId, @Param("updateTodoVO") TodoVO todoVO);
+
+    void deleteTodo(int todoId);
 }

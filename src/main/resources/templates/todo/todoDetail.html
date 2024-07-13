@@ -9,74 +9,75 @@
 <div class="container" style="max-width: 500px; margin-top: 100px">
     <div class="text-center"><h1>일정 수정하기</h1></div>
 
-    <!--제목 내용-->
-    <div>
-        <label for="todoTitle"></label>
-        <input class="form-control"
-               id="todoTitle"
-               name="todoTitle"
-               placeholder="제목"
-               readonly
-               th:value="${details.todoTitle}"
-               type="text">
-    </div>
-    <div>
-        <label for="todoContent"></label>
-        <textarea class="form-control"
-                  id="todoContent"
-                  name="todoContent"
-                  placeholder="내용"
-                  readonly
-                  th:text="${details.todoContent}"
-                  type="text"></textarea>
-    </div>
-    <!--제목 내용 끝-->
-
-    <!--시작시간 종료시간-->
-    <div style="margin-top: 30px; margin-bottom: 30px;">
+    <form method="post" th:action="@{/todo/list/{todoId}(todoId=${details.todoId})}">
+        <!--제목 내용-->
         <div>
-            <label for='startDatetime'>시작 시간</label>
-            <input class="form-control" id='startDatetime' name="todoStart"
+            <label for="todoTitle"></label>
+            <input class="form-control"
+                   id="todoTitle"
+                   name="todoTitle"
+                   placeholder="제목"
                    readonly
-                   th:value="${details.todoStart}"
-                   type="datetime-local"/>
+                   th:value="${details.todoTitle}"
+                   type="text">
         </div>
         <div>
-            <label for='deadlineDatetime'>종료 시간</label>
-            <input class="form-control" id='deadlineDatetime' name="todoEnd"
-                   readonly
-                   th:value="${details.todoEnd}"
-                   type="datetime-local"/>
+            <label for="todoContent"></label>
+            <textarea class="form-control"
+                      id="todoContent"
+                      name="todoContent"
+                      placeholder="내용"
+                      readonly
+                      th:text="${details.todoContent}"
+                      type="text"></textarea>
         </div>
-    </div>
-    <!--시작시간 종료시간 끝-->
+        <!--제목 내용 끝-->
 
-    <!--중요도 설정-->
-    <select aria-label="priority select" class="form-select" disabled name="todoPriority">
-        <option selected th:text="${details.todoPriority}">중요도 설정</option>
-        <option value="5">★★★★★</option>
-        <option value="4">★★★★</option>
-        <option value="3">★★★</option>
-        <option value="2">★★</option>
-        <option value="1">★</option>
-    </select>
-    <!--중요도 설정 끝-->
+        <!--시작시간 종료시간-->
+        <div style="margin-top: 30px; margin-bottom: 30px;">
+            <div>
+                <label for='startDatetime'>시작 시간</label>
+                <input class="form-control" id='startDatetime' name="todoStart"
+                       readonly
+                       th:value="${details.todoStart}"
+                       type="datetime-local"/>
+            </div>
+            <div>
+                <label for='deadlineDatetime'>종료 시간</label>
+                <input class="form-control" id='deadlineDatetime' name="todoEnd"
+                       readonly
+                       th:value="${details.todoEnd}"
+                       type="datetime-local"/>
+            </div>
+        </div>
+        <!--시작시간 종료시간 끝-->
 
-    <!--목록 수정 삭제 버튼-->
-    <div class="text-lg-end" style="margin-top: 30px">
-        <button class="btn btn-outline-primary"
-                th:onclick="|location.href='@{/todo/list}'|">목록
-        </button>
+        <!--중요도 설정-->
+        <select aria-label="priority select" class="form-select" disabled name="todoPriority">
+            <option selected th:text="${details.todoPriority}">중요도 설정</option>
+            <option value="5">★★★★★</option>
+            <option value="4">★★★★</option>
+            <option value="3">★★★</option>
+            <option value="2">★★</option>
+            <option value="1">★</option>
+        </select>
+        <!--중요도 설정 끝-->
 
-        <button class="btn btn-outline-primary"
-                th:onclick="|location.href='@{/todo/list/{todoId}/edit(todoId=${details.todoId})}'|"
-                type="button">수정
-        </button>
-
-        <button class="btn btn-outline-primary"
-                th:onclick="|location.href='@{list}'|">삭제
-        </button>
-    </div>
+        <!--목록 수정 삭제 버튼-->
+        <div class="text-lg-end" style="margin-top: 30px">
+            <button class="btn btn-outline-primary"
+                    th:onclick="|location.href='@{/todo/list}'|"
+                    type="button">목록
+            </button>
+            <button class="btn btn-outline-primary"
+                    th:onclick="|location.href='@{/todo/list/{todoId}/edit(todoId=${details.todoId})}'|"
+                    type="button">수정
+            </button>
+            <button class="btn btn-outline-primary"
+                    type="submit">삭제
+            </button>
+        </div>
+    </form>
     <!--목록 수정 삭제 버튼 끝-->
 
 </div>

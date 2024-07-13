@@ -49,6 +49,14 @@ public class TodoListController {
         return "todo/todoEdit";
     }
 
+    // 일정 삭제
+    @PostMapping("/list/{todoId}")
+    public String todoDelete(@PathVariable int todoId) {
+        todoListService.deleteTodoService(todoId);
+        return "redirect:/todo/list";
+    }
+
+
     // 일정 저장
     @PostMapping("/list/{todoId}/edit")
     public String todoEdit(@PathVariable int todoId, @ModelAttribute("update") TodoUpdateDto todoUpdateDto) {
