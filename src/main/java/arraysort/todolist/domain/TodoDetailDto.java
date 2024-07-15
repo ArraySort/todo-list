@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class TodoEditDto {
+public class TodoDetailDto {
 
     private int todoId;
 
@@ -19,7 +19,7 @@ public class TodoEditDto {
 
     private int todoPriority;
 
-    public static TodoEditDto of(TodoVO todoVO) {
+    public static TodoDetailDto of(TodoVO todoVO) {
         return builder()
                 .todoId(todoVO.getTodoId())
                 .todoTitle(todoVO.getTodoTitle())

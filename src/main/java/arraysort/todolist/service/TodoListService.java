@@ -5,11 +5,13 @@ import arraysort.todolist.exception.DetailNotFoundException;
 import arraysort.todolist.mapper.TodoListMapper;
 import arraysort.todolist.utils.UserUtil;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class TodoListService {
@@ -18,7 +20,7 @@ public class TodoListService {
 
     @Transactional
     public void addTodo(TodoAddDto todoAddDto) {
-        TodoVO todoVO = TodoVO.of(todoAddDto, UserUtil.getCurrentLoginUserId());
+        TodoVO todoVO = TodoVO.of(todoAddDto);
         todoListMapper.insertTodo(todoVO);
     }
 
@@ -31,8 +33,8 @@ public class TodoListService {
     }
 
     @Transactional(readOnly = true)
-    public TodoEditDto findTodoDetailByTodoId(int todoId) {
-        return TodoEditDto.of(todoListMapper.selectTodoDetailByTodoId(todoId)
+    public TodoDetailDto findTodoDetailByTodoId(int todoId) {
+        return TodoDetailDto.of(todoListMapper.selectTodoDetailByTodoId(todoId)
                 .orElseThrow(DetailNotFoundException::new));
     }
 
