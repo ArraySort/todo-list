@@ -23,7 +23,7 @@ public class TodoListDto {
 
     private Boolean todoDone;
 
-    public static TodoListDto list(TodoVO todoVO) {
+    public static TodoListDto of(TodoVO todoVO) {
         return TodoListDto.builder()
                 .todoId(todoVO.getTodoId())
                 .userId(todoVO.getUserId())
@@ -34,13 +34,5 @@ public class TodoListDto {
                 .todoPriority(todoVO.getTodoPriority())
                 .todoDone(todoVO.getTodoDone())
                 .build();
-    }
-
-    public void updateUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public void updateTodoDone(boolean todoDone) {
-        this.todoDone = todoDone;
     }
 }

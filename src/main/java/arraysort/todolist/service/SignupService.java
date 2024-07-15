@@ -16,17 +16,18 @@ import org.springframework.transaction.annotation.Transactional;
 public class SignupService {
 
     private final SignupMapper signupMapper;
+
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
-    public void createUserService(SignupDto signupDto) {
+    public void addUser(SignupDto signupDto) {
 
-        if (signupMapper.checkUser(signupDto.getUserId()) != 0) {
+        if (signupMapper.selectUserCountById(signupDto.getUserId()) != 0) {
             throw new DuplicateUserException();
         }
 
         signupDto.encodePassword(passwordEncoder.encode(signupDto.getUserPassword()));
         UserVO userVO = UserVO.of(signupDto);
-        signupMapper.createUser(userVO);
+        signupMapper.insertUser(userVO);
     }
 }

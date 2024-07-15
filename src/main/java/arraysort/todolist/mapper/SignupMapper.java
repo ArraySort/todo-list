@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface SignupMapper {
 
-    void createUser(UserVO signupUser);
+    void insertUser(UserVO signupUser);
 
-    int checkUser(String userId);
+    int selectUserCountById(String userId);
 }

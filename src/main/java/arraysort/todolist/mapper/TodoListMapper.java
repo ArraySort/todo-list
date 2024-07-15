@@ -5,15 +5,16 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 @Mapper
 public interface TodoListMapper {
 
-    void createTodo(TodoVO todoVO);
+    void insertTodo(TodoVO todoVO);
 
-    List<TodoVO> getListByUserId(String userId);
+    List<TodoVO> selectTodoListByUserId(String userId);
 
-    TodoVO getDetailByTodoId(int todoId);
+    Optional<TodoVO> selectTodoDetailByTodoId(int todoId);
 
     void updateTodo(@Param("todoId") int todoId, @Param("updateTodoVO") TodoVO todoVO);
 

@@ -5,8 +5,7 @@
 <mapper namespace="arraysort.todolist.mapper.TodoListMapper">
 
     <!--할 일 생성-->
-    <insert id="createTodo" parameterType="arraysort.todolist.domain.TodoVO" useGeneratedKeys="true"
-            keyProperty="todoId">
+    <insert id="insertTodo" parameterType="arraysort.todolist.domain.TodoVO">
         insert into todo(user_id,
                          todo_title,
                          todo_content,
@@ -23,7 +22,7 @@
                 #{todoDone});
     </insert>
 
-    <select id="getListByUserId" resultType="arraysort.todolist.domain.TodoVO">
+    <select id="selectTodoListByUserId" resultType="arraysort.todolist.domain.TodoVO">
         select todo_id,
                user_id,
                todo_title,
@@ -36,7 +35,7 @@
         where user_id = #{userId};
     </select>
 
-    <select id="getDetailByTodoId" resultType="arraysort.todolist.domain.TodoVO">
+    <select id="selectTodoDetailByTodoId" resultType="arraysort.todolist.domain.TodoVO">
         select todo_id,
                user_id,
                todo_title,

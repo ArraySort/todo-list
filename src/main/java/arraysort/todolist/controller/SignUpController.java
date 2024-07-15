@@ -23,8 +23,8 @@ public class SignUpController {
     }
 
     @PostMapping
-    public String createUserController(@Valid @ModelAttribute("user") SignupDto signupDto) {
-        signupService.createUserService(signupDto);
+    public String userAdd(@Valid @ModelAttribute("user") SignupDto signupDto) {
+        signupService.addUser(signupDto);
         return "redirect:/login";
     }
 }

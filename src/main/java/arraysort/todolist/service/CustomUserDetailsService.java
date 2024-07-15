@@ -24,7 +24,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Transactional(readOnly = true)
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return loginMapper.getUserById(username)
+        return loginMapper.selectUserById(username)
                 .map(this::createUserDetails)
                 .orElseThrow(() -> new UsernameNotFoundException(username));
     }

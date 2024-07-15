@@ -7,6 +7,6 @@ import java.util.Optional;
 
 @Mapper
 public interface LoginMapper {
-    
-    Optional<UserVO> getUserById(String userId);
+
+    Optional<UserVO> selectUserById(String userId);
 }

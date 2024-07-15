@@ -1,8 +1,9 @@
 package arraysort.todolist.controller;
 
-import arraysort.todolist.domain.TodoListDto;
+import arraysort.todolist.domain.TodoAddDto;
 import arraysort.todolist.domain.TodoUpdateDto;
 import arraysort.todolist.service.TodoListService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,8 +18,8 @@ public class TodoListController {
 
     // 할 일 목록
     @GetMapping("/list")
-    public String todolist(Model model) {
-        model.addAttribute("lists", todoListService.getListByUserIdService());
+    public String todoList(Model model) {
+        model.addAttribute("lists", todoListService.findTodoListByUserId());
         return "todo/todoList";
     }
 
@@ -30,43 +31,36 @@ public class TodoListController {
 
     // 일정 등록
     @PostMapping("/add")
-    public String todoAdd(@ModelAttribute TodoListDto todoListDto) {
-        todoListService.createTodoService(todoListDto);
+    public String todoAdd(@Valid @ModelAttribute TodoAddDto todoAddDto) {
+        todoListService.addTodo(todoAddDto);
         return "redirect:/todo/list";
     }
 
     // 일정 상세조회
     @GetMapping("/list/{todoId}")
-    public String todoDetail(@PathVariable int todoId, Model model) {
-        model.addAttribute("details", todoListService.getTodoDetailByTodoIdService(todoId));
+    public String todoDetails(@PathVariable int todoId, Model model) {
+        model.addAttribute("details", todoListService.findTodoDetailByTodoId(todoId));
         return "todo/todoDetail";
     }
 
     // 일정 수정
     @GetMapping("/list/{todoId}/edit")
-    public String todoEditForm(@PathVariable int todoId, Model model) {
-        model.addAttribute("update", todoListService.getTodoDetailByTodoIdService(todoId));
+    public String todoModifyForm(@PathVariable int todoId, Model model) {
+        model.addAttribute("update", todoListService.findTodoDetailByTodoId(todoId));
         return "todo/todoEdit";
     }
 
     // 일정 삭제
     @PostMapping("/list/{todoId}")
-    public String todoDelete(@PathVariable int todoId) {
-        todoListService.deleteTodoService(todoId);
+    public String todoRemove(@PathVariable int todoId) {
+        todoListService.removeTodo(todoId);
         return "redirect:/todo/list";
     }
 
-
     // 일정 저장
     @PostMapping("/list/{todoId}/edit")
-    public String todoEdit(@PathVariable int todoId, @ModelAttribute("update") TodoUpdateDto todoUpdateDto) {
-        todoListService.updateTodoService(todoId, todoUpdateDto);
+    public String todoModify(@PathVariable int todoId, @Valid @ModelAttribute("update") TodoUpdateDto todoUpdateDto) {
+        todoListService.modifyTodo(todoId, todoUpdateDto);
         return "redirect:/todo/list/{todoId}";
-    }
-
-    // 로그아웃
-    @PostMapping("/logout-process")
-    public String logoutProcess() {
-        return "login";
     }
 }

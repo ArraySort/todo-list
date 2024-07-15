@@ -5,13 +5,13 @@
 <mapper namespace="arraysort.todolist.mapper.SignupMapper">
 
     <!--회원 가입-->
-    <insert id="createUser" parameterType="arraysort.todolist.domain.UserVO">
+    <insert id="insertUser" parameterType="arraysort.todolist.domain.UserVO">
         insert into user(user_id, user_password, user_name)
         values (#{userId}, #{userPassword}, #{userName})
     </insert>
 
     <!--아이디 중복 체크-->
-    <select id="checkUser" resultType="int">
+    <select id="selectUserCountById" resultType="int">
         select count(*)
         from user
         where user_id = #{userId};

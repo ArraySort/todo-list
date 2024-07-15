@@ -19,7 +19,7 @@ public class TodoEditDto {
 
     private int todoPriority;
 
-    public static TodoEditDto edit(TodoVO todoVO) {
+    public static TodoEditDto of(TodoVO todoVO) {
         return builder()
                 .todoId(todoVO.getTodoId())
                 .todoTitle(todoVO.getTodoTitle())

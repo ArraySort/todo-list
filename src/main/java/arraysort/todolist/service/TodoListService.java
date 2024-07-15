@@ -1,9 +1,7 @@
 package arraysort.todolist.service;
 
-import arraysort.todolist.domain.TodoEditDto;
-import arraysort.todolist.domain.TodoListDto;
-import arraysort.todolist.domain.TodoUpdateDto;
-import arraysort.todolist.domain.TodoVO;
+import arraysort.todolist.domain.*;
+import arraysort.todolist.exception.DetailNotFoundException;
 import arraysort.todolist.mapper.TodoListMapper;
 import arraysort.todolist.utils.UserUtil;
 import lombok.RequiredArgsConstructor;
@@ -19,35 +17,35 @@ public class TodoListService {
     private final TodoListMapper todoListMapper;
 
     @Transactional
-    public void createTodoService(TodoListDto todoListDto) {
-        todoListDto.updateUserId(UserUtil.getCurrentLoginUserId());
-        TodoVO todoVO = TodoVO.create(todoListDto);
-        todoListMapper.createTodo(todoVO);
+    public void addTodo(TodoAddDto todoAddDto) {
+        TodoVO todoVO = TodoVO.of(todoAddDto, UserUtil.getCurrentLoginUserId());
+        todoListMapper.insertTodo(todoVO);
     }
 
     @Transactional(readOnly = true)
-    public List<TodoListDto> getListByUserIdService() {
-        List<TodoVO> todoList = todoListMapper.getListByUserId(UserUtil.getCurrentLoginUserId());
-
-        return todoList.stream()
-                .map(TodoListDto::list)
+    public List<TodoListDto> findTodoListByUserId() {
+        return todoListMapper.selectTodoListByUserId(UserUtil.getCurrentLoginUserId())
+                .stream()
+                .map(TodoListDto::of)
                 .toList();
     }
 
     @Transactional(readOnly = true)
-    public TodoEditDto getTodoDetailByTodoIdService(int todoId) {
-        return TodoEditDto.edit(todoListMapper.getDetailByTodoId(todoId));
+    public TodoEditDto findTodoDetailByTodoId(int todoId) {
+        return TodoEditDto.of(todoListMapper.selectTodoDetailByTodoId(todoId)
+                .orElseThrow(DetailNotFoundException::new));
     }
 
     @Transactional
-    public void updateTodoService(int todoId, TodoUpdateDto todoUpdateDto) {
-        TodoVO todoVO = todoListMapper.getDetailByTodoId(todoId);
+    public void modifyTodo(int todoId, TodoUpdateDto todoUpdateDto) {
+        TodoVO todoVO = todoListMapper.selectTodoDetailByTodoId(todoId)
+                .orElseThrow(DetailNotFoundException::new);
         todoVO.update(todoUpdateDto);
         todoListMapper.updateTodo(todoId, todoVO);
     }
 
     @Transactional
-    public void deleteTodoService(int todoId) {
+    public void removeTodo(int todoId) {
         todoListMapper.deleteTodo(todoId);
     }
 }
