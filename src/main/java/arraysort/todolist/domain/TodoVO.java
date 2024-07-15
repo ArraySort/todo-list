@@ -1,5 +1,6 @@
 package arraysort.todolist.domain;
 
+import arraysort.todolist.utils.UserUtil;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -21,18 +22,17 @@ public class TodoVO {
 
     private int todoPriority;
 
-    private Boolean todoDone;
+    private boolean todoDone;
 
-    public static TodoVO create(TodoListDto todoListDto) {
-        todoListDto.updateTodoDone(false);
+    public static TodoVO of(TodoAddDto todoAddDto) {
         return TodoVO.builder()
-                .userId(todoListDto.getUserId())
-                .todoTitle(todoListDto.getTodoTitle())
-                .todoContent(todoListDto.getTodoContent())
-                .todoStart(todoListDto.getTodoStart())
-                .todoEnd(todoListDto.getTodoEnd())
-                .todoPriority(todoListDto.getTodoPriority())
-                .todoDone(todoListDto.getTodoDone())
+                .userId(UserUtil.getCurrentLoginUserId())
+                .todoTitle(todoAddDto.getTodoTitle())
+                .todoContent(todoAddDto.getTodoContent())
+                .todoStart(todoAddDto.getTodoStart())
+                .todoEnd(todoAddDto.getTodoEnd())
+                .todoPriority(todoAddDto.getTodoPriority())
+                .todoDone(false)
                 .build();
     }
 
