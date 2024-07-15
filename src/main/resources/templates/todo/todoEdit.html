@@ -34,13 +34,13 @@
         <!--시작시간 종료시간 지정-->
         <div style="margin-top: 30px; margin-bottom: 30px;">
             <div>
-                <label for='startDatetime'>시작 시간</label>
-                <input class="form-control" id='startDatetime' name="todoStart" th:value="${update.todoStart}"
+                <label for='todoStart'>시작 시간</label>
+                <input class="form-control" id='todoStart' name="todoStart" th:value="${update.todoStart}"
                        type="datetime-local"/>
             </div>
             <div>
-                <label for='deadlineDatetime'>종료 시간</label>
-                <input class="form-control" id='deadlineDatetime' name="todoEnd" th:value="${update.todoEnd}"
+                <label for='todoEnd'>종료 시간</label>
+                <input class="form-control" id='todoEnd' name="todoEnd" th:value="${update.todoEnd}"
                        type="datetime-local"/>
             </div>
         </div>
@@ -64,6 +64,7 @@
                     type="button">취소
             </button>
             <button class="btn btn-outline-primary"
+                    id="save"
                     type="submit">저장
             </button>
         </div>
@@ -73,8 +74,12 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        $('#todoStart').val(new Date().toISOString().slice(0, 16));
-        $('#todoEnd').val(new Date().toISOString().slice(0, 16));
+        $('#save').on('click', function (e) {
+            if (!($('#todoTitle').val() && $('#todoStart').val() && $('#todoEnd').val())) {
+                e.preventDefault();
+                alert('제목, 시작시간, 종료시간 입력은 필수입니다.');
+            }
+        });
     });
 </script>
 

@@ -1,30 +1,25 @@
 package arraysort.todolist.security;
 
 
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 @Slf4j
 @Component
 public class LoginFailureHandler implements AuthenticationFailureHandler {
 
     @Override
-    public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
-
-        if (exception instanceof BadCredentialsException) {
-            request.setAttribute("loginError", "아이디 또는 비밀번호가 잘못되었습니다.");
-        } else {
-            request.setAttribute("loginError", "알 수 없는 오류가 발생했습니다.");
-        }
-        request.getSession().setAttribute("loginError", "아이디 또는 비밀번호가 잘못되었습니다.");
-        response.sendRedirect("/login-process");
+    public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException {
+        PrintWriter out = response.getWriter();
+        response.setContentType("text/html;charset=UTF-8");
+        out.println("<script>alert('아이디와 비밀번호를 다시 확인해주세요.'); history.go(-1);</script>");
+        out.flush();
     }
 }
