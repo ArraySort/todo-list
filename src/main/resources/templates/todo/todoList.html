@@ -9,7 +9,7 @@
 <div class="container" style="max-width: 800px; margin-top: 10px;">
     <div class="py-5 text-center"><h2>USER's TODO LIST</h2></div>
 
-    <form action="login-process" method="post" th:action="@{logout-process}" th:object="${lists}">
+    <form action="/login-process" method="post" th:action="@{logout-process}" th:object="${lists}">
         <!--일정 등록 버튼-->
         <div class="row">
             <div class="col">
@@ -70,6 +70,15 @@
         <!--로그아웃 버튼 끝-->
     </form>
 </div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        history.pushState(null, null, location.href);
+        window.onpopstate = function () {
+            history.forward();
+        };
+    });
+</script>
 
 </body>
 </html>
