@@ -72,16 +72,38 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        $('#todoStart').val(new Date().toISOString().slice(0, 16));
-        $('#todoEnd').val(new Date().toISOString().slice(0, 16));
+
+        const todoTitle = $('#todoTitle');
+        const todoStart = $('#todoStart');
+        const todoEnd = $('#todoEnd');
+        const todoContent = $('#todoContent');
+
+        // 시작 종료 시간 현재 날짜 초기화
+        todoStart.val(new Date().toISOString().slice(0, 16));
+        todoEnd.val(new Date().toISOString().slice(0, 16));
+
+        todoTitle.removeClass('error');
+        todoStart.removeClass('error');
+        todoEnd.removeClass('error');
+        todoContent.removeClass('error');
 
         // 필수 입력값 검사
         $('#save').on('click', function (e) {
-            if (!($('#todoTitle').val() && $('#todoStart').val() && $('#todoEnd').val())) {
+            if (!(todoTitle.val() && todoStart.val() && todoEnd.val())) {
                 e.preventDefault();
+                todoTitle.addClass('error');
+                todoStart.addClass('error');
+                todoEnd.addClass('error');
                 alert('제목, 시작시간, 종료시간 입력은 필수입니다.');
+                todoTitle.focus();
+            } else if (todoContent.val().length > 200) {
+                todoContent.addClass('error');
+                e.preventDefault();
+                alert('내용은 최대 200자까지 입력할 수 있습니다.');
+                todoContent.focus();
             }
         });
+
     });
 </script>
 

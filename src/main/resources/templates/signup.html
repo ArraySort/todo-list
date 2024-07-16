@@ -72,9 +72,14 @@
                 alert('아이디와 비밀번호, 닉네임은 필수 입력사항입니다.');
             } else if (userId.val().length < 4 || userId.val().length > 20) {
                 e.preventDefault();
-                userId.addClass('error')
-                alert('아이디는 최소 4글자 이상, 최대 20글자 이하입니다.')
-                userId.focus()
+                userId.addClass('error');
+                alert('아이디는 최소 4글자 이상, 최대 20글자 이하입니다.');
+                userId.focus();
+            } else if (userName.val().length < 2 || userName.val().length > 20) {
+                e.preventDefault();
+                userName.addClass('error');
+                alert('닉네임은 최소 2글자 이상, 최대 20글자 이하입니다.')
+                userName.focus();
             }
         });
     });
