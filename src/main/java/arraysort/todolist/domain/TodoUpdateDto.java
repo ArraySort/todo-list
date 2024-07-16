@@ -1,7 +1,6 @@
 package arraysort.todolist.domain;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -22,6 +21,9 @@ public class TodoUpdateDto {
     @NotBlank(message = "종료 시간은 필수로 지정해야 합니다.")
     private String todoEnd;
 
+    @NotNull
+    @Min(1)
+    @Max(5)
     private Integer todoPriority;
 
 }

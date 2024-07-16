@@ -7,7 +7,7 @@ import lombok.Getter;
 @Builder
 public class TodoDetailDto {
 
-    private int todoId;
+    private long todoId;
 
     private String todoTitle;
 
