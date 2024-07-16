@@ -14,9 +14,11 @@ public interface TodoListMapper {
 
     List<TodoVO> selectTodoListByUserId(String userId);
 
-    Optional<TodoVO> selectTodoDetailByTodoId(int todoId);
+    Optional<TodoVO> selectTodoDetailByTodoId(@Param("todoId") long todoId, @Param("userId") String userId);
 
-    void updateTodo(@Param("todoId") int todoId, @Param("updateTodoVO") TodoVO todoVO);
+    void updateTodo(@Param("todoId") long todoId, @Param("updateTodoVO") TodoVO todoVO);
 
-    void deleteTodo(int todoId);
+    void deleteTodo(long todoId);
+
+    Optional<Integer> selectExistTodoId(@Param("todoId") long todoId, @Param("userId") String userId);
 }
