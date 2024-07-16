@@ -2,6 +2,7 @@ package arraysort.todolist.service;
 
 import arraysort.todolist.domain.*;
 import arraysort.todolist.exception.DetailNotFoundException;
+import arraysort.todolist.exception.IdNotFoundException;
 import arraysort.todolist.mapper.TodoListMapper;
 import arraysort.todolist.utils.UserUtil;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -33,21 +35,27 @@ public class TodoListService {
     }
 
     @Transactional(readOnly = true)
-    public TodoDetailDto findTodoDetailByTodoId(int todoId) {
-        return TodoDetailDto.of(todoListMapper.selectTodoDetailByTodoId(todoId)
+    public TodoDetailDto findTodoDetailByTodoId(long todoId) {
+        return TodoDetailDto.of(todoListMapper.selectTodoDetailByTodoId(todoId, UserUtil.getCurrentLoginUserId())
                 .orElseThrow(DetailNotFoundException::new));
     }
 
     @Transactional
-    public void modifyTodo(int todoId, TodoUpdateDto todoUpdateDto) {
-        TodoVO todoVO = todoListMapper.selectTodoDetailByTodoId(todoId)
+    public void modifyTodo(long todoId, TodoUpdateDto todoUpdateDto) {
+        TodoVO todoVO = todoListMapper.selectTodoDetailByTodoId(todoId, UserUtil.getCurrentLoginUserId())
                 .orElseThrow(DetailNotFoundException::new);
         todoVO.update(todoUpdateDto);
         todoListMapper.updateTodo(todoId, todoVO);
     }
 
     @Transactional
-    public void removeTodo(int todoId) {
+    public void removeTodo(long todoId) {
+        Optional<Integer> existTodoId = todoListMapper.selectExistTodoId(todoId, UserUtil.getCurrentLoginUserId());
+
+        if (existTodoId.isEmpty()) {
+            throw new IdNotFoundException();
+        }
+        
         todoListMapper.deleteTodo(todoId);
     }
 }

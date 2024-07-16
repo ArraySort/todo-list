@@ -10,16 +10,26 @@ import org.springframework.web.servlet.ModelAndView;
 @ControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
+
+    // 회원가입 시 아이디 중복
     @ExceptionHandler(DuplicateUserException.class)
     public ModelAndView handleDuplicateUserException() {
         return getModelAndView("아이디가 이미 존재합니다.");
     }
 
+    // 세부일정 보기 중 세부일정이 없는 경우
     @ExceptionHandler(DetailNotFoundException.class)
     public ModelAndView handleDetailNotFoundException() {
         return getModelAndView("세부 일정을 찾을 수 없습니다.");
     }
 
+    // 삭제 중 해당 일정이 없는 경우
+    @ExceptionHandler(IdNotFoundException.class)
+    public ModelAndView handleIdNotFoundException() {
+        return getModelAndView("해당 일정을 찾을 수 없습니다.");
+    }
+
+    // @Valid 유효성 검증에 대한 예외
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ModelAndView handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
         StringBuilder errorMessages = new StringBuilder();
@@ -36,5 +46,9 @@ public class GlobalExceptionHandler {
         mav.addObject("errorMessage", message);
         return mav;
     }
-    //@ExceptionHandler(Exception.class) TODO: 지정 예외 제외하고 모든 예외에 대해서(로그 필요)
+
+//    @ExceptionHandler(Exception.class)
+//    public void exceptionHandler(Exception e) {
+//        // log.info("exception={}", e.getMessage());
+//    }
 }
