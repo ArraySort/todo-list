@@ -22,4 +22,6 @@ public interface TodoListMapper {
     Optional<Integer> selectExistTodoId(long todoId, String userId);
 
     int selectTotalCount(String userId);
+
+    String selectUserNameByUserId(String userId);
 }

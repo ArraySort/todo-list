@@ -71,4 +71,9 @@ public class TodoListService {
 
         return todoListMapper.selectTotalCount(getCurrentLoginUserId());
     }
+
+    @Transactional(readOnly = true)
+    public String findUserNameByUserId() {
+        return todoListMapper.selectUserNameByUserId(getCurrentLoginUserId());
+    }
 }

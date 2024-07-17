@@ -6,11 +6,13 @@ import arraysort.todolist.domain.TodoUpdateDto;
 import arraysort.todolist.service.TodoListService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
+@Slf4j
 @RequiredArgsConstructor
 @RequestMapping("/todo")
 public class TodoListController {
@@ -24,6 +26,7 @@ public class TodoListController {
         model.addAttribute("lists", todoListService.findTodoListByUserId(paginationDto));
         model.addAttribute("currentPage", page);
         model.addAttribute("pagination", paginationDto);
+        model.addAttribute("userName", todoListService.findUserNameByUserId());
         return "todo/todoList";
     }
 

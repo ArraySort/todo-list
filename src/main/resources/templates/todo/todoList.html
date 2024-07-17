@@ -7,7 +7,7 @@
 <body>
 
 <div class="container" style="max-width: 800px; margin-top: 10px;">
-    <div class="py-5 text-center"><h2>USER's TODO LIST</h2></div>
+    <div class="py-5 text-center"><h2 th:text="|${userName}| + '\'s TODO LIST'">USER's TODO LIST</h2></div>
 
     <form action="/login-process" method="post" th:action="@{logout-process}" th:object="${lists}">
         <!--일정 등록 로그아웃 버튼-->
@@ -47,12 +47,12 @@
                 </thead>
                 <tbody>
                 <tr th:each="list : ${lists}">
-                    <td th:text="${list.userId}"></td>
+                    <td th:text="${userName}"></td>
                     <td><a href="todoDetail.html" th:href="@{/todo/list/{todoId}(todoId=${list.getTodoId()})}"
                            th:text="${list.todoTitle}"></a></td>
-                    <td th:text="${list.todoStart}">2024-07-02</td>
-                    <td th:text="${list.todoEnd}">2024-07-03</td>
-                    <td th:text="${list.todoPriority}">★★★★★</td>
+                    <td th:text="${list.todoStart.substring(0, list.todoStart.length()-3)}">yyyy-MM-dd HH:mm</td>
+                    <td th:text="${list.todoEnd.substring(0, list.todoEnd.length()-3)}">yyyy-MM-dd HH:mm</td>
+                    <td th:text="${list.todoPriority}"></td>
                     <td>
                         <div class="form-check">
                             <label class="form-check-label" for="flexCheckDefault">

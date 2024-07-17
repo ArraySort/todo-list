@@ -79,4 +79,10 @@
         where user_id = #{userId}
     </select>
 
+    <select id="selectUserNameByUserId" resultType="String">
+        select user_name
+        from user
+        where user_id = #{userId}
+    </select>
+
 </mapper>
