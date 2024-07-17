@@ -23,7 +23,7 @@ public class PaginationDto {
     public PaginationDto(int totalCount, int currentPage) {
         this.totalCount = totalCount;
         this.currentPage = currentPage;
-        this.rowCount = 1;
+        this.rowCount = 10;
         this.pageCount = 5;
         setPagination();
     }
