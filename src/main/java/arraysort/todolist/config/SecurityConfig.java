@@ -34,7 +34,7 @@ public class SecurityConfig {
                         .usernameParameter("userId")
                         .passwordParameter("userPassword")
                         .failureHandler(loginFailureHandler)
-                        .defaultSuccessUrl("/todo/list")
+                        .defaultSuccessUrl("/todo/list?page=1")
                         .permitAll()
                 )
 

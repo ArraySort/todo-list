@@ -60,6 +60,38 @@
 
         <hr class="my-4">
 
+        <!--페이지 네비게이션-->
+        <nav>
+            <ul class="pagination justify-content-center">
+                <!-- 처음 페이지로 이동하는 버튼 -->
+                <li class="page-item">
+                    <a class="page-link" th:href="@{'/todo/list?page=1'}" th:text="'&laquo'"></a>
+                </li>
+                <!-- 이전 블록으로 이동하는 버튼 -->
+                <li class="page-item" th:if="${pagination.isPrev == true}">
+                    <a class="page-link" th:href="@{'/todo/list?page='+${pagination.startPage - 1}}"
+                       th:text="'&lt'"></a>
+                </li>
+                <!-- 페이지 번호 -->
+                <li class="page-item" th:classappend="${pageNum == currentPage} ? 'active'"
+                    th:each="pageNum : ${#numbers.sequence(pagination.startPage, pagination.endPage)}">
+                    <a class="page-link" th:href="@{'/todo/list?page='+${pageNum}}"
+                       th:text="${pageNum}"></a>
+                </li>
+                <!-- 다음 블록으로 이동하는 버튼 -->
+                <li class="page-item" th:if="${pagination.isNext == true}">
+                    <a class="page-link" th:href="@{'/todo/list?page='+${pagination.endPage + 1}|}"
+                       th:text="'&gt'"></a>
+                </li>
+                <!-- 끝 페이지로 이동하는 버튼 -->
+                <li class="page-item">
+                    <a class="page-link" th:href="@{'/todo/list?page='+${pagination.totalPageCount}}"
+                       th:text="'&raquo'"></a>
+                </li>
+            </ul>
+        </nav>
+        <!--페이지 네비게이션 끝-->
+
         <!--로그아웃 버튼-->
         <div class="text-lg-end" style="margin-top: 30px">
             <button class="btn btn-outline-primary"

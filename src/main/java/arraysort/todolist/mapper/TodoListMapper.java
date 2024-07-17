@@ -2,7 +2,6 @@ package arraysort.todolist.mapper;
 
 import arraysort.todolist.domain.TodoVO;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,13 +11,15 @@ public interface TodoListMapper {
 
     void insertTodo(TodoVO todoVO);
 
-    List<TodoVO> selectTodoListByUserId(String userId);
+    List<TodoVO> selectTodoListByUserId(String userId, int rowCount, int offset);
 
-    Optional<TodoVO> selectTodoDetailByTodoId(@Param("todoId") long todoId, @Param("userId") String userId);
+    Optional<TodoVO> selectTodoDetailByTodoId(long todoId, String userId);
 
-    void updateTodo(@Param("todoId") long todoId, @Param("updateTodoVO") TodoVO todoVO);
+    void updateTodo(long todoId, TodoVO todoVO);
 
     void deleteTodo(long todoId);
 
-    Optional<Integer> selectExistTodoId(@Param("todoId") long todoId, @Param("userId") String userId);
+    Optional<Integer> selectExistTodoId(long todoId, String userId);
+
+    int selectTotalCount(String userId);
 }

@@ -1,5 +1,6 @@
 package arraysort.todolist.controller;
 
+import arraysort.todolist.domain.PaginationDto;
 import arraysort.todolist.domain.TodoAddDto;
 import arraysort.todolist.domain.TodoUpdateDto;
 import arraysort.todolist.service.TodoListService;
@@ -18,8 +19,11 @@ public class TodoListController {
 
     // 할 일 목록
     @GetMapping("/list")
-    public String todoList(Model model) {
-        model.addAttribute("lists", todoListService.findTodoListByUserId());
+    public String todoList(Model model, @RequestParam(value = "page", defaultValue = "1") int page) {
+        PaginationDto paginationDto = new PaginationDto(todoListService.findTotalPageCount(), page);
+        model.addAttribute("lists", todoListService.findTodoListByUserId(paginationDto));
+        model.addAttribute("currentPage", page);
+        model.addAttribute("pagination", paginationDto);
         return "todo/todoList";
     }
 

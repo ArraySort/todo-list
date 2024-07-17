@@ -4,7 +4,6 @@ import arraysort.todolist.domain.*;
 import arraysort.todolist.exception.DetailNotFoundException;
 import arraysort.todolist.exception.IdNotFoundException;
 import arraysort.todolist.mapper.TodoListMapper;
-import arraysort.todolist.utils.UserUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -12,6 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+
+import static arraysort.todolist.utils.UserUtil.getCurrentLoginUserId;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -27,8 +28,10 @@ public class TodoListService {
     }
 
     @Transactional(readOnly = true)
-    public List<TodoListDto> findTodoListByUserId() {
-        return todoListMapper.selectTodoListByUserId(UserUtil.getCurrentLoginUserId())
+    public List<TodoListDto> findTodoListByUserId(PaginationDto paginationDto) {
+        return todoListMapper.selectTodoListByUserId(getCurrentLoginUserId(),
+                        paginationDto.getRowCount(),
+                        paginationDto.getOffset())
                 .stream()
                 .map(TodoListDto::of)
                 .toList();
@@ -36,13 +39,13 @@ public class TodoListService {
 
     @Transactional(readOnly = true)
     public TodoDetailDto findTodoDetailByTodoId(long todoId) {
-        return TodoDetailDto.of(todoListMapper.selectTodoDetailByTodoId(todoId, UserUtil.getCurrentLoginUserId())
+        return TodoDetailDto.of(todoListMapper.selectTodoDetailByTodoId(todoId, getCurrentLoginUserId())
                 .orElseThrow(DetailNotFoundException::new));
     }
 
     @Transactional
     public void modifyTodo(long todoId, TodoUpdateDto todoUpdateDto) {
-        TodoVO todoVO = todoListMapper.selectTodoDetailByTodoId(todoId, UserUtil.getCurrentLoginUserId())
+        TodoVO todoVO = todoListMapper.selectTodoDetailByTodoId(todoId, getCurrentLoginUserId())
                 .orElseThrow(DetailNotFoundException::new);
         todoVO.update(todoUpdateDto);
         todoListMapper.updateTodo(todoId, todoVO);
@@ -50,12 +53,22 @@ public class TodoListService {
 
     @Transactional
     public void removeTodo(long todoId) {
-        Optional<Integer> existTodoId = todoListMapper.selectExistTodoId(todoId, UserUtil.getCurrentLoginUserId());
+        Optional<Integer> existTodoId = todoListMapper.selectExistTodoId(todoId, getCurrentLoginUserId());
 
         if (existTodoId.isEmpty()) {
             throw new IdNotFoundException();
         }
-        
+
         todoListMapper.deleteTodo(todoId);
+    }
+
+    @Transactional(readOnly = true)
+    public int findTotalPageCount() {
+
+        if (todoListMapper.selectTotalCount(getCurrentLoginUserId()) == 0) {
+            return 1;
+        }
+
+        return todoListMapper.selectTotalCount(getCurrentLoginUserId());
     }
 }
