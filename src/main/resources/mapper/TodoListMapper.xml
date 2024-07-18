@@ -88,7 +88,7 @@
         where user_id = #{userId}
     </select>
 
-    <update id="updateTodoDone">
+    <update id="updateTodoDone" parameterType="Long">
         update todo
         set todo_done = true
         where todo_id in
@@ -96,5 +96,15 @@
             #{todoId}
         </foreach>
     </update>
+
+    <update id="updateTodoNotDone" parameterType="Long">
+        update todo
+        set todo_done = false
+        where todo_id in
+        <foreach item="todoId" collection="todoIds" open="(" separator="," close=")">
+            #{todoId}
+        </foreach>
+    </update>
+
 
 </mapper>

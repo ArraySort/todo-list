@@ -73,11 +73,25 @@ public class TodoListService {
     }
 
     @Transactional
-    public void modifyTodoDone(List<Long> todoIds) {
-        if (todoIds == null) {
+    public void modifyTodoDone(List<Long> checkedTodoIds, List<Long> allTodoIds) {
+        if (allTodoIds == null || allTodoIds.isEmpty()) {
             throw new DoneCheckNotFoundException();
         }
-        
-        todoListMapper.updateTodoDone(todoIds);
+
+        if (checkedTodoIds == null) {
+            throw new DoneCheckNotFoundException();
+        }
+
+        List<Long> notDoneTodoIds = allTodoIds.stream()
+                .filter(id -> !checkedTodoIds.contains(id))
+                .toList();
+
+        if (!checkedTodoIds.isEmpty()) {
+            todoListMapper.updateTodoDone(checkedTodoIds);
+        }
+
+        if (!notDoneTodoIds.isEmpty()) {
+            todoListMapper.updateTodoNotDone(notDoneTodoIds);
+        }
     }
 }

@@ -24,4 +24,6 @@ public interface TodoListMapper {
     int selectTotalCount(String userId, boolean todoDone);
 
     void updateTodoDone(List<Long> todoIds);
+
+    void updateTodoNotDone(List<Long> todoIds);
 }

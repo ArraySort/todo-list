@@ -38,8 +38,11 @@ public class TodoListController {
     }
 
     @PostMapping("/list/updateTodoDone")
-    public String todoListDoneCheck(@RequestParam(value = "todoIds", required = false) List<Long> todoIds) {
-        todoListService.modifyTodoDone(todoIds);
+    public String todoListDoneCheck(@RequestParam(value = "todoIds", required = false) List<Long> todoIds,
+                                    @RequestParam(value = "allTodoIds", required = false) List<Long> allTodoIds) {
+        log.info("todoIds.true={}", todoIds);
+        log.info("allTodoIds={}", allTodoIds);
+        todoListService.modifyTodoDone(todoIds, allTodoIds);
         return "redirect:/todo/list";
     }
 

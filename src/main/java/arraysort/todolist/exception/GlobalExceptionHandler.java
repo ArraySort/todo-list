@@ -31,7 +31,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(DoneCheckNotFoundException.class)
     public ModelAndView handleDoneCheckNotFoundException() {
-        return getModelAndView("체크된 일정이 없습니다.");
+        return getModelAndView("선택된 일정이 없습니다.");
     }
 
     // @Valid 유효성 검증에 대한 예외
