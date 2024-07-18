@@ -28,8 +28,8 @@ public class TodoListService {
     }
 
     @Transactional(readOnly = true)
-    public List<TodoListDto> findTodoListByUserId(PaginationDto paginationDto) {
-        return todoListMapper.selectTodoListByUserId(getCurrentLoginUserId(),
+    public List<TodoListDto> findTodoListByUserId(PaginationDto paginationDto, boolean todoDone) {
+        return todoListMapper.selectTodoListByUserId(getCurrentLoginUserId(), todoDone,
                         paginationDto.getRowCount(),
                         paginationDto.getOffset())
                 .stream()
@@ -54,7 +54,6 @@ public class TodoListService {
     @Transactional
     public void removeTodo(long todoId) {
         Optional<Integer> existTodoId = todoListMapper.selectExistTodoId(todoId, getCurrentLoginUserId());
-
         if (existTodoId.isEmpty()) {
             throw new IdNotFoundException();
         }
@@ -63,17 +62,19 @@ public class TodoListService {
     }
 
     @Transactional(readOnly = true)
-    public int findTotalPageCount() {
-
-        if (todoListMapper.selectTotalCount(getCurrentLoginUserId()) == 0) {
+    public int findTotalPageCount(boolean todoDone) {
+        int totalPageCount = todoListMapper.selectTotalCount(getCurrentLoginUserId(), todoDone);
+        if (totalPageCount == 0) {
             return 1;
         }
 
-        return todoListMapper.selectTotalCount(getCurrentLoginUserId());
+        return totalPageCount;
     }
 
-    @Transactional(readOnly = true)
-    public String findUserNameByUserId() {
-        return todoListMapper.selectUserNameByUserId(getCurrentLoginUserId());
+    @Transactional
+    public void modifyTodoDone(List<Long> todoIds) {
+        if (todoIds != null) {
+            todoListMapper.updateTodoDone(todoIds);
+        }
     }
 }

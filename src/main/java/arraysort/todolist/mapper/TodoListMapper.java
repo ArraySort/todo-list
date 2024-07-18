@@ -11,7 +11,7 @@ public interface TodoListMapper {
 
     void insertTodo(TodoVO todoVO);
 
-    List<TodoVO> selectTodoListByUserId(String userId, int rowCount, int offset);
+    List<TodoVO> selectTodoListByUserId(String userId, boolean todoDone, int rowCount, int offset);
 
     Optional<TodoVO> selectTodoDetailByTodoId(long todoId, String userId);
 
@@ -21,7 +21,7 @@ public interface TodoListMapper {
 
     Optional<Integer> selectExistTodoId(long todoId, String userId);
 
-    int selectTotalCount(String userId);
+    int selectTotalCount(String userId, boolean todoDone);
 
-    String selectUserNameByUserId(String userId);
+    void updateTodoDone(List<Long> todoIds);
 }

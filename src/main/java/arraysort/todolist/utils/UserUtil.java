@@ -1,6 +1,7 @@
 package arraysort.todolist.utils;
 
 import arraysort.todolist.exception.InvalidPrincipalException;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -12,11 +13,13 @@ public class UserUtil {
 
     public static String getCurrentLoginUserId() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        
-        if (principal == null) {
-            throw new InvalidPrincipalException();
-        }
+
+        if (principal == null) throw new InvalidPrincipalException();
 
         return ((UserDetails) principal).getUsername();
+    }
+
+    public static boolean isAuthenticatedUser(Authentication authentication) {
+        return authentication != null && authentication.isAuthenticated();
     }
 }

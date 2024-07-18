@@ -33,6 +33,8 @@
                todo_done
         from todo
         where user_id = #{userId}
+          and todo_done = #{todoDone}
+        ORDER BY todo_id desc
         limit #{rowCount} offset #{offset}
     </select>
 
@@ -52,11 +54,11 @@
 
     <update id="updateTodo" parameterType="arraysort.todolist.domain.TodoVO">
         update todo
-        set todo_title    = #{updateTodoVO.todoTitle},
-            todo_content  = #{updateTodoVO.todoContent},
-            todo_start    = #{updateTodoVO.todoStart},
-            todo_end      = #{updateTodoVO.todoEnd},
-            todo_priority = #{updateTodoVO.todoPriority}
+        set todo_title    = #{todoVO.todoTitle},
+            todo_content  = #{todoVO.todoContent},
+            todo_start    = #{todoVO.todoStart},
+            todo_end      = #{todoVO.todoEnd},
+            todo_priority = #{todoVO.todoPriority}
         where todo_id = #{todoId}
     </update>
 
@@ -77,6 +79,7 @@
         select count(*)
         from todo
         where user_id = #{userId}
+          and todo_done = #{todoDone}
     </select>
 
     <select id="selectUserNameByUserId" resultType="String">
@@ -84,5 +87,14 @@
         from user
         where user_id = #{userId}
     </select>
+
+    <update id="updateTodoDone">
+        update todo
+        set todo_done = true
+        where todo_id in
+        <foreach item="todoId" collection="todoIds" open="(" separator="," close=")">
+            #{todoId}
+        </foreach>
+    </update>
 
 </mapper>

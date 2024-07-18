@@ -3,6 +3,7 @@ package arraysort.todolist.controller;
 import arraysort.todolist.domain.PaginationDto;
 import arraysort.todolist.domain.TodoAddDto;
 import arraysort.todolist.domain.TodoUpdateDto;
+import arraysort.todolist.service.AuthService;
 import arraysort.todolist.service.TodoListService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @Slf4j
 @RequiredArgsConstructor
@@ -18,16 +21,26 @@ import org.springframework.web.bind.annotation.*;
 public class TodoListController {
 
     private final TodoListService todoListService;
+    private final AuthService authService;
 
     // 할 일 목록
     @GetMapping("/list")
-    public String todoList(Model model, @RequestParam(value = "page", defaultValue = "1") int page) {
-        PaginationDto paginationDto = new PaginationDto(todoListService.findTotalPageCount(), page);
-        model.addAttribute("lists", todoListService.findTodoListByUserId(paginationDto));
+    public String todoList(Model model,
+                           @RequestParam(value = "page", defaultValue = "1") int page,
+                           @RequestParam(value = "done", defaultValue = "false") boolean done) {
+        PaginationDto paginationDto = new PaginationDto(todoListService.findTotalPageCount(done), page);
+        model.addAttribute("lists", todoListService.findTodoListByUserId(paginationDto, done));
         model.addAttribute("currentPage", page);
         model.addAttribute("pagination", paginationDto);
-        model.addAttribute("userName", todoListService.findUserNameByUserId());
+        model.addAttribute("userName", authService.findUserNameByUserId());
+        model.addAttribute("done", done);
         return "todo/todoList";
+    }
+
+    @PostMapping("/list/updateTodoDone")
+    public String todoListDoneCheck(@RequestParam(value = "todoIds", required = false) List<Long> todoIds) {
+        todoListService.modifyTodoDone(todoIds);
+        return "redirect:/todo/list";
     }
 
     // 일정 입력
