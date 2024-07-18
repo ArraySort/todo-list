@@ -21,7 +21,7 @@
                 #{todoPriority},
                 #{todoDone});
     </insert>
-
+    
     <select id="selectTodoListByUserId" resultType="arraysort.todolist.domain.TodoVO">
         select todo_id,
                user_id,
@@ -106,5 +106,13 @@
         </foreach>
     </update>
 
+    <delete id="deleteCheckedTodos" parameterType="Long">
+        delete
+        from todo
+        where todo_id in
+        <foreach item="todoId" collection="todoIds" open="(" separator="," close=")">
+            #{todoId}
+        </foreach>
+    </delete>
 
 </mapper>

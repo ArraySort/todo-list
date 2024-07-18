@@ -7,7 +7,6 @@ import arraysort.todolist.service.AuthService;
 import arraysort.todolist.service.TodoListService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@Slf4j
 @RequiredArgsConstructor
 @RequestMapping("/todo")
 public class TodoListController {
@@ -40,9 +38,13 @@ public class TodoListController {
     @PostMapping("/list/updateTodoDone")
     public String todoListDoneCheck(@RequestParam(value = "todoIds", required = false) List<Long> todoIds,
                                     @RequestParam(value = "allTodoIds", required = false) List<Long> allTodoIds) {
-        log.info("todoIds.true={}", todoIds);
-        log.info("allTodoIds={}", allTodoIds);
         todoListService.modifyTodoDone(todoIds, allTodoIds);
+        return "redirect:/todo/list";
+    }
+
+    @PostMapping("/list/deleteTodos")
+    public String removeCheckedTodos(@RequestParam(value = "todoIds", required = false) List<Long> todoIds) {
+        todoListService.removeCheckedTodos(todoIds);
         return "redirect:/todo/list";
     }
 

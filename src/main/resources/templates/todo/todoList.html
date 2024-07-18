@@ -14,7 +14,8 @@
     <div class="row">
         <div class="col">
             <div>
-                <button class="btn btn-outline-primary float-start" style="margin-right: 5px"
+                <button class="btn btn-outline-primary float-start"
+                        style="margin-right: 5px"
                         th:classappend="${done == true} ? 'active'"
                         th:onclick="|location.href='@{/todo/list(done=true)}'|"
                         type="button">완료된 일정
@@ -26,7 +27,13 @@
                 </button>
             </div>
             <div>
-                <button class="btn btn-outline-primary float-end" onclick="location.href='todoAdd.html'"
+                <button class="btn btn-outline-primary float-end"
+                        form="deleteTodosForm"
+                        id="deleteButton"
+                        style="margin-left: 5px"
+                        type="submit">완료 일정 삭제
+                </button>
+                <button class="btn btn-outline-primary float-end"
                         style="margin-left: 5px"
                         th:onclick="|location.href='@{add}'|"
                         type="button">일정 등록
@@ -35,6 +42,7 @@
                         form="updateTodoDone"
                         type="submit">상태 반영
                 </button>
+
             </div>
         </div>
     </div>
@@ -53,7 +61,11 @@
                     <th>시작시간</th>
                     <th>종료시간</th>
                     <th>우선순위</th>
-                    <th>상태</th>
+                    <th>상태&ensp;
+                        <label>
+                            <input class="form-check-input" id="selectAllCheckboxes" type="checkbox">
+                        </label>
+                    </th>
                 </tr>
                 </thead>
                 <tbody>
@@ -80,6 +92,10 @@
                 </tr>
                 </tbody>
             </table>
+        </form>
+
+        <form id="deleteTodosForm" method="post" th:action="@{/todo/list/deleteTodos}">
+            <input id="deleteTodoIds" name="todoIds" type="hidden">
         </form>
     </div>
     <!--리스트 테이블 종료-->
@@ -148,6 +164,31 @@
                     .attr('value', '');
                 $(this).append(hiddenInput);
                 this.submit();
+            }
+        });
+
+        // 전체 선택 체크박스 이벤트 핸들러
+        $('#selectAllCheckboxes').on('change', function () {
+            if (this.checked) {
+                // 전체 체크박스 선택
+                $('input[name="todoIds"]').prop('checked', true);
+            } else {
+                // 전체 체크박스 해제
+                $('input[name="todoIds"]').prop('checked', false);
+            }
+        });
+
+        $('#deleteButton').on('click', function (event) {
+            const selectedTodoIds = $('input[name="todoIds"]:checked').map(function () {
+                return $(this).val();
+            }).get();
+
+            if (selectedTodoIds.length > 0) {
+                $('#deleteTodosForm input[name="todoIds"]').val(selectedTodoIds.join(','));
+                $('#deleteTodosForm').submit();
+            } else {
+                event.preventDefault();
+                alert('삭제할 일정을 선택해주세요.');
             }
         });
 

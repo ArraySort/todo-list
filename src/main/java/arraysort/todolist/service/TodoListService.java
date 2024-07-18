@@ -1,12 +1,11 @@
 package arraysort.todolist.service;
 
 import arraysort.todolist.domain.*;
+import arraysort.todolist.exception.CheckedNotFoundException;
 import arraysort.todolist.exception.DetailNotFoundException;
-import arraysort.todolist.exception.DoneCheckNotFoundException;
 import arraysort.todolist.exception.IdNotFoundException;
 import arraysort.todolist.mapper.TodoListMapper;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,7 +14,6 @@ import java.util.Optional;
 
 import static arraysort.todolist.utils.UserUtil.getCurrentLoginUserId;
 
-@Slf4j
 @RequiredArgsConstructor
 @Service
 public class TodoListService {
@@ -75,11 +73,11 @@ public class TodoListService {
     @Transactional
     public void modifyTodoDone(List<Long> checkedTodoIds, List<Long> allTodoIds) {
         if (allTodoIds == null || allTodoIds.isEmpty()) {
-            throw new DoneCheckNotFoundException();
+            throw new CheckedNotFoundException();
         }
 
         if (checkedTodoIds == null) {
-            throw new DoneCheckNotFoundException();
+            throw new CheckedNotFoundException();
         }
 
         List<Long> notDoneTodoIds = allTodoIds.stream()
@@ -93,5 +91,14 @@ public class TodoListService {
         if (!notDoneTodoIds.isEmpty()) {
             todoListMapper.updateTodoNotDone(notDoneTodoIds);
         }
+    }
+
+    @Transactional
+    public void removeCheckedTodos(List<Long> todoIds) {
+        if (todoIds == null || todoIds.isEmpty()) {
+            throw new CheckedNotFoundException();
+        }
+
+        todoListMapper.deleteCheckedTodos(todoIds);
     }
 }

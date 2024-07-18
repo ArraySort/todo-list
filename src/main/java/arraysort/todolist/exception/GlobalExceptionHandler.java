@@ -29,7 +29,7 @@ public class GlobalExceptionHandler {
         return getModelAndView("해당 일정을 찾을 수 없습니다.");
     }
 
-    @ExceptionHandler(DoneCheckNotFoundException.class)
+    @ExceptionHandler(CheckedNotFoundException.class)
     public ModelAndView handleDoneCheckNotFoundException() {
         return getModelAndView("선택된 일정이 없습니다.");
     }

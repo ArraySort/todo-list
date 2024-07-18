@@ -26,4 +26,6 @@ public interface TodoListMapper {
     void updateTodoDone(List<Long> todoIds);
 
     void updateTodoNotDone(List<Long> todoIds);
+
+    void deleteCheckedTodos(List<Long> todoIds);
 }
