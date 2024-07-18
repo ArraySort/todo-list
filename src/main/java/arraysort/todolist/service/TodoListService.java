@@ -2,6 +2,7 @@ package arraysort.todolist.service;
 
 import arraysort.todolist.domain.*;
 import arraysort.todolist.exception.DetailNotFoundException;
+import arraysort.todolist.exception.DoneCheckNotFoundException;
 import arraysort.todolist.exception.IdNotFoundException;
 import arraysort.todolist.mapper.TodoListMapper;
 import lombok.RequiredArgsConstructor;
@@ -73,8 +74,10 @@ public class TodoListService {
 
     @Transactional
     public void modifyTodoDone(List<Long> todoIds) {
-        if (todoIds != null) {
-            todoListMapper.updateTodoDone(todoIds);
+        if (todoIds == null) {
+            throw new DoneCheckNotFoundException();
         }
+        
+        todoListMapper.updateTodoDone(todoIds);
     }
 }
