@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="arraysort.todolist.mapper.SignupMapper">
+<mapper namespace="arraysort.todolist.mapper.SignUpMapper">
 
     <!--회원 가입-->
     <insert id="insertUser" parameterType="arraysort.todolist.domain.UserVO">

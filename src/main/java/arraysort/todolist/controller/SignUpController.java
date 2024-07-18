@@ -1,7 +1,7 @@
 package arraysort.todolist.controller;
 
 import arraysort.todolist.domain.SignupDto;
-import arraysort.todolist.service.SignupService;
+import arraysort.todolist.service.SignUpService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/signup")
 public class SignUpController {
 
-    private final SignupService signupService;
+    private final SignUpService signupService;
 
     @GetMapping
     public String signup() {

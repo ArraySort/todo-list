@@ -4,7 +4,7 @@ import arraysort.todolist.domain.UserVO;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
-public interface SignupMapper {
+public interface SignUpMapper {
 
     void insertUser(UserVO signupUser);
 

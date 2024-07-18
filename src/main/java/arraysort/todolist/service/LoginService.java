@@ -17,7 +17,7 @@ import java.util.Collections;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class CustomUserDetailsService implements UserDetailsService {
+public class LoginService implements UserDetailsService {
 
     private final LoginMapper loginMapper;
 
