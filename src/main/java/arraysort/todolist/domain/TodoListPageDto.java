@@ -7,8 +7,12 @@ import lombok.Setter;
 @Setter
 public class TodoListPageDto {
 
-    private int page = 1;
+    private int page;
 
-    private boolean done = false;
+    private boolean done;
 
+    public TodoListPageDto() {
+        this.page = 1;
+        this.done = false;
+    }
 }

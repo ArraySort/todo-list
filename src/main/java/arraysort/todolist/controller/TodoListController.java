@@ -21,6 +21,7 @@ public class TodoListController {
     @GetMapping("/list")
     public String todoList(@ModelAttribute TodoListPageDto todoListPageDto, Model model) {
         PaginationDto paginationDto = todoListService.findTodoListWithPaging(todoListPageDto.getPage(), todoListPageDto.isDone());
+
         model.addAttribute("pagination", paginationDto);
         model.addAttribute("userName", authService.findUserNameByUserId());
         return "todo/todoList";
