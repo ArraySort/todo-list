@@ -29,6 +29,7 @@ public class GlobalExceptionHandler {
         return getModelAndView("해당 일정을 찾을 수 없습니다.");
     }
 
+    // 일정 상태반영, 삭제 중 선택된 일정이 없을 경우
     @ExceptionHandler(CheckedNotFoundException.class)
     public ModelAndView handleDoneCheckNotFoundException() {
         return getModelAndView("선택된 일정이 없습니다.");
@@ -51,9 +52,4 @@ public class GlobalExceptionHandler {
         mav.addObject("errorMessage", message);
         return mav;
     }
-
-//    @ExceptionHandler(Exception.class)
-//    public void exceptionHandler(Exception e) {
-//        // log.info("exception={}", e.getMessage());
-//    }
 }

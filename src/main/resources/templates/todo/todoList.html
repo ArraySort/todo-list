@@ -155,10 +155,10 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        // 완료된 일정에서 아무것도 체크되어 있지 않을 때 null return 방지
+        // 완료된 일정 이벤트 핸들러
         $('#updateTodoDone').on('submit', function (event) {
-            const checkboxes = $('input[name="todoIds"]:checked');
-            if (checkboxes.length === 0) {
+            const todoIds = $('input[name="todoIds"]:checked');
+            if (todoIds.length === 0) {
                 event.preventDefault();
                 const hiddenInput = $('<input>')
                     .attr('type', 'hidden')
@@ -180,6 +180,7 @@
             }
         });
 
+        // 삭제 버튼 이벤트 핸들러
         $('#deleteButton').on('click', function (event) {
             const selectedTodoIds = $('input[name="todoIds"]:checked').map(function () {
                 return $(this).val();
