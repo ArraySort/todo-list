@@ -16,12 +16,12 @@
             <div>
                 <button class="btn btn-outline-primary float-start"
                         style="margin-right: 5px"
-                        th:classappend="${done == true} ? 'active'"
+                        th:classappend="${pagination.isDone() == true} ? 'active'"
                         th:onclick="|location.href='@{/todo/list(done=true)}'|"
                         type="button">완료된 일정
                 </button>
                 <button class="btn btn-outline-primary float-start"
-                        th:classappend="${done == false} ? 'active'"
+                        th:classappend="${pagination.isDone() == false} ? 'active'"
                         th:onclick="|location.href='@{/todo/list(done=false)}'|"
                         type="button">미완료 일정
                 </button>
@@ -69,7 +69,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr class="text-center" th:each="list : ${lists}">
+                <tr class="text-center" th:each="list : ${pagination.getTodoListDto()}">
                     <td th:text="${userName}"></td>
                     <td><a href="todoDetail.html" th:href="@{/todo/list/{todoId}(todoId=${list.getTodoId()})}"
                            th:text="${list.todoTitle}"></a></td>
@@ -110,29 +110,31 @@
                 <ul class="pagination justify-content-center">
                     <!-- 처음 페이지로 이동하는 버튼 -->
                     <li class="page-item">
-                        <a class="page-link" th:href="@{'/todo/list?page=1&done='+${done}}" th:text="'&laquo'"></a>
+                        <a class="page-link" th:href="@{'/todo/list?page=1&done='+${pagination.isDone()}}"
+                           th:text="'&laquo'"></a>
                     </li>
                     <!-- 이전 블록으로 이동하는 버튼 -->
                     <li class="page-item" th:if="${pagination.isPrev == true}">
                         <a class="page-link"
-                           th:href="@{'/todo/list?page='+${pagination.startPage - 1}+'&done='+${done}}"
+                           th:href="@{'/todo/list?page='+${pagination.startPage - 1}+'&done='+${pagination.isDone()}}"
                            th:text="'&lt'"></a>
                     </li>
                     <!-- 페이지 번호 -->
-                    <li class="page-item" th:classappend="${pageNum == currentPage} ? 'active'"
+                    <li class="page-item" th:classappend="${pageNum == pagination.getCurrentPage()} ? 'active'"
                         th:each="pageNum : ${#numbers.sequence(pagination.startPage, pagination.endPage)}">
-                        <a class="page-link" th:href="@{'/todo/list?page='+${pageNum}+'&done='+${done}}"
+                        <a class="page-link" th:href="@{'/todo/list?page='+${pageNum}+'&done='+${pagination.isDone()}}"
                            th:text="${pageNum}"></a>
                     </li>
                     <!-- 다음 블록으로 이동하는 버튼 -->
                     <li class="page-item" th:if="${pagination.isNext == true}">
-                        <a class="page-link" th:href="@{'/todo/list?page='+${pagination.endPage + 1}+'&done='+${done}}"
+                        <a class="page-link"
+                           th:href="@{'/todo/list?page='+${pagination.endPage + 1}+'&done='+${pagination.isDone()}}"
                            th:text="'&gt'"></a>
                     </li>
                     <!-- 끝 페이지로 이동하는 버튼 -->
                     <li class="page-item">
                         <a class="page-link"
-                           th:href="@{'/todo/list?page='+${pagination.totalPageCount}+'&done='+${done}}"
+                           th:href="@{'/todo/list?page='+${pagination.totalPageCount}+'&done='+${pagination.isDone()}}"
                            th:text="'&raquo'"></a>
                     </li>
                 </ul>

@@ -27,13 +27,22 @@ public class TodoListService {
     }
 
     @Transactional(readOnly = true)
-    public List<TodoListDto> findTodoListByUserId(PaginationDto paginationDto, boolean todoDone) {
-        return todoListMapper.selectTodoListByUserId(getCurrentLoginUserId(), todoDone,
-                        paginationDto.getRowCount(),
-                        paginationDto.getOffset())
+    public PaginationDto findTodoListWithPaging(int currentPage, boolean todoDone) {
+        int totalCount = todoListMapper.selectTotalCount(getCurrentLoginUserId(), todoDone);
+        totalCount = totalCount == 0 ? 1 : totalCount;
+
+        int offset = (currentPage - 1) * 10;
+        
+        List<TodoListDto> todoListDto = todoListMapper.selectTodoListByUserId(
+                        getCurrentLoginUserId(),
+                        todoDone,
+                        10,
+                        offset)
                 .stream()
                 .map(TodoListDto::of)
                 .toList();
+
+        return new PaginationDto(totalCount, currentPage, todoDone, todoListDto);
     }
 
     @Transactional(readOnly = true)
@@ -58,16 +67,6 @@ public class TodoListService {
         }
 
         todoListMapper.deleteTodo(todoId);
-    }
-
-    @Transactional(readOnly = true)
-    public int findTotalPageCount(boolean todoDone) {
-        int totalPageCount = todoListMapper.selectTotalCount(getCurrentLoginUserId(), todoDone);
-        if (totalPageCount == 0) {
-            return 1;
-        }
-
-        return totalPageCount;
     }
 
     @Transactional

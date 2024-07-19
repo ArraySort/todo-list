@@ -1,8 +1,6 @@
 package arraysort.todolist.controller;
 
-import arraysort.todolist.domain.PaginationDto;
-import arraysort.todolist.domain.TodoAddDto;
-import arraysort.todolist.domain.TodoUpdateDto;
+import arraysort.todolist.domain.*;
 import arraysort.todolist.service.AuthService;
 import arraysort.todolist.service.TodoListService;
 import jakarta.validation.Valid;
@@ -10,8 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -23,28 +19,24 @@ public class TodoListController {
 
     // 할 일 목록
     @GetMapping("/list")
-    public String todoList(Model model,
-                           @RequestParam(value = "page", defaultValue = "1") int page,
-                           @RequestParam(value = "done", defaultValue = "false") boolean done) {
-        PaginationDto paginationDto = new PaginationDto(todoListService.findTotalPageCount(done), page);
-        model.addAttribute("lists", todoListService.findTodoListByUserId(paginationDto, done));
-        model.addAttribute("currentPage", page);
+    public String todoList(@ModelAttribute TodoListPageDto todoListPageDto, Model model) {
+        PaginationDto paginationDto = todoListService.findTodoListWithPaging(todoListPageDto.getPage(), todoListPageDto.isDone());
         model.addAttribute("pagination", paginationDto);
         model.addAttribute("userName", authService.findUserNameByUserId());
-        model.addAttribute("done", done);
         return "todo/todoList";
     }
 
+    // 일정 완료 및 미완료 처리
     @PostMapping("/list/updateTodoDone")
-    public String todoListDoneCheck(@RequestParam(value = "todoIds", required = false) List<Long> todoIds,
-                                    @RequestParam(value = "allTodoIds", required = false) List<Long> allTodoIds) {
-        todoListService.modifyTodoDone(todoIds, allTodoIds);
+    public String todoListDoneCheck(@ModelAttribute TodoIdsDto todoIdsDto) {
+        todoListService.modifyTodoDone(todoIdsDto.getTodoIds(), todoIdsDto.getAllTodoIds());
         return "redirect:/todo/list";
     }
 
+    // 선택된 일정 삭제
     @PostMapping("/list/deleteTodos")
-    public String removeCheckedTodos(@RequestParam(value = "todoIds", required = false) List<Long> todoIds) {
-        todoListService.removeCheckedTodos(todoIds);
+    public String removeCheckedTodos(@ModelAttribute TodoIdsDto todoIdsDto) {
+        todoListService.removeCheckedTodos(todoIdsDto.getTodoIds());
         return "redirect:/todo/list";
     }
 
