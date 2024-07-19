@@ -28,4 +28,6 @@ public interface TodoListMapper {
     void updateTodoNotDone(List<Long> todoIds);
 
     void deleteCheckedTodos(List<Long> todoIds);
+
+    List<Long> selectExistTodoIdList(List<Long> todoIds, String userId);
 }

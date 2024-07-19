@@ -30,9 +30,8 @@ public class TodoListService {
     public PaginationDto findTodoListWithPaging(int currentPage, boolean todoDone) {
         int totalCount = todoListMapper.selectTotalCount(getCurrentLoginUserId(), todoDone);
         totalCount = totalCount == 0 ? 1 : totalCount;
-
         int offset = (currentPage - 1) * 10;
-        
+
         List<TodoListDto> todoListDto = todoListMapper.selectTodoListByUserId(
                         getCurrentLoginUserId(),
                         todoDone,
@@ -71,12 +70,11 @@ public class TodoListService {
 
     @Transactional
     public void modifyTodoDone(List<Long> checkedTodoIds, List<Long> allTodoIds) {
-        if (allTodoIds == null || allTodoIds.isEmpty()) {
-            throw new CheckedNotFoundException();
-        }
+        List<Long> validCheckedTodoIds = checkedTodoIds.isEmpty() ? List.of() : todoListMapper.selectExistTodoIdList(checkedTodoIds, getCurrentLoginUserId());
+        List<Long> validAllTodoIds = allTodoIds.isEmpty() ? List.of() : todoListMapper.selectExistTodoIdList(allTodoIds, getCurrentLoginUserId());
 
-        if (checkedTodoIds == null) {
-            throw new CheckedNotFoundException();
+        if (checkedTodoIds.size() != validCheckedTodoIds.size() || allTodoIds.size() != validAllTodoIds.size()) {
+            throw new IdNotFoundException();
         }
 
         List<Long> notDoneTodoIds = allTodoIds.stream()
@@ -93,11 +91,17 @@ public class TodoListService {
     }
 
     @Transactional
-    public void removeCheckedTodos(List<Long> todoIds) {
-        if (todoIds == null || todoIds.isEmpty()) {
+    public void removeCheckedTodos(List<Long> checkedTodoIds) {
+        if (checkedTodoIds == null || checkedTodoIds.isEmpty()) {
             throw new CheckedNotFoundException();
         }
 
-        todoListMapper.deleteCheckedTodos(todoIds);
+        List<Long> validCheckedTodoIds = todoListMapper.selectExistTodoIdList(checkedTodoIds, getCurrentLoginUserId());
+
+        if (checkedTodoIds.size() != validCheckedTodoIds.size()) {
+            throw new IdNotFoundException();
+        }
+
+        todoListMapper.deleteCheckedTodos(checkedTodoIds);
     }
 }
