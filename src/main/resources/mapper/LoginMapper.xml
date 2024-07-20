@@ -4,7 +4,7 @@
 
 <mapper namespace="arraysort.todolist.mapper.LoginMapper">
 
-    <select id="selectUserById" resultType="arraysort.todolist.domain.UserVO">
+    <select id="selectUserById" parameterType="String" resultType="arraysort.todolist.domain.UserVO">
         select user_id, user_password, user_name
         from user
         where user_id = #{userId}
