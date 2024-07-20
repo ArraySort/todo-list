@@ -11,6 +11,15 @@
 
     <form enctype="multipart/form-data" method="post" th:action="@{signup}">
         <!--아이디 비밀번호 닉네임 입력-->
+
+        <div class="form-group">
+            <div class="image-container">
+                <img alt="Image Preview" class="image-preview" id="imagePreview" src="/images/userProfile.png">
+            </div>
+            <label for="imageFile">프로필 이미지를 골라주세요.</label>
+            <input accept="image/*" class="form-control" id="imageFile" name="imageFile" type="file">
+        </div>
+
         <div>
             <label for="userId"></label>
             <input class="form-control"
@@ -34,11 +43,6 @@
                    name="userName"
                    placeholder="닉네임"
                    type="text">
-        </div>
-
-        <div class="form-group">
-            <label for="imageFile">Profile Image</label>
-            <input class="form-control" id="imageFile" name="imageFile" type="file">
         </div>
         <!--아이디 비밀번호 닉네임 입력 끝-->
 
@@ -85,6 +89,19 @@
                 userName.addClass('error');
                 alert('닉네임은 최소 2글자 이상, 최대 20글자 이하입니다.')
                 userName.focus();
+            }
+        });
+
+        $('#imageFile').on('change', function () {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#imagePreview').attr('src', e.target.result).show();
+                };
+                reader.readAsDataURL(file);
+            } else {
+                $('#imagePreview').attr('src', 'path/to/userProfile.png').show();
             }
         });
     });

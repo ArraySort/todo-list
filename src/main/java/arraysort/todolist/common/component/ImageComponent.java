@@ -22,6 +22,7 @@ import java.util.UUID;
 public class ImageComponent {
 
     private static final List<String> ALLOWED_EXTENSIONS = List.of("jpg", "jpeg", "png");
+    private static final String DEFAULT_IMAGE = "userProfile.png";
 
     @Value("${file.upload-path}")
     private String uploadPath;
@@ -36,7 +37,7 @@ public class ImageComponent {
      */
     public ImageDto uploadImage(String userId, MultipartFile multipartFile) {
         if (multipartFile == null || multipartFile.isEmpty()) {
-            throw new ImageUploadException("업로드 된 파일이 비어 있습니다.");
+            return getDefaultImageDto(userId);
         }
 
         String savedName = generateSavedFileName(multipartFile.getOriginalFilename());
@@ -56,6 +57,21 @@ public class ImageComponent {
                 .originalName(multipartFile.getOriginalFilename())
                 .savedName(savedName)
                 .imageSize(multipartFile.getSize())
+                .build();
+    }
+
+    /**
+     * 기본 이미지 DTO 생성
+     *
+     * @param userId 사용자 아이디
+     * @return 기본 이미지 DTO
+     */
+    private ImageDto getDefaultImageDto(String userId) {
+        return ImageDto.builder()
+                .userId(userId)
+                .originalName(DEFAULT_IMAGE)
+                .savedName(DEFAULT_IMAGE)
+                .imageSize(0) // 기본 이미지의 경우 사이즈는 0
                 .build();
     }
 
