@@ -35,6 +35,11 @@ public class GlobalExceptionHandler {
         return getModelAndView("선택된 일정이 없습니다.");
     }
 
+    @ExceptionHandler(ImageUploadException.class)
+    public ModelAndView handleImageUploadException(ImageUploadException e) {
+        return getModelAndView(e.getMessage());
+    }
+
     // @Valid 유효성 검증에 대한 예외
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ModelAndView handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
