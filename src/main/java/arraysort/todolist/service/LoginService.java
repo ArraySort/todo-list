@@ -3,7 +3,6 @@ package arraysort.todolist.service;
 import arraysort.todolist.domain.UserVO;
 import arraysort.todolist.mapper.LoginMapper;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,7 +15,6 @@ import java.util.Collections;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j
 public class LoginService implements UserDetailsService {
 
     private final LoginMapper loginMapper;
