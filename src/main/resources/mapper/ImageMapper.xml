@@ -4,9 +4,15 @@
 
 <mapper namespace="arraysort.todolist.mapper.ImageMapper">
 
-    <insert id="insertImage">
+    <insert id="insertImage" parameterType="arraysort.todolist.domain.ImageDto">
         insert into image(user_id, original_name, saved_name, image_size)
         values (#{userId}, #{originalName}, #{savedName}, #{imageSize})
     </insert>
+
+    <select id="findSavedImageNameByUserId" parameterType="String" resultType="String">
+        select saved_name
+        from image
+        where user_id = #{userId}
+    </select>
 
 </mapper>

@@ -7,4 +7,6 @@ import org.apache.ibatis.annotations.Mapper;
 public interface ImageMapper {
 
     void insertImage(ImageDto imageDto);
+
+    String findSavedImageNameByUserId(String userId);
 }

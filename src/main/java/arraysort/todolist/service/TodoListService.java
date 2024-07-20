@@ -6,6 +6,7 @@ import arraysort.todolist.exception.DetailNotFoundException;
 import arraysort.todolist.exception.IdNotFoundException;
 import arraysort.todolist.mapper.TodoListMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,10 +16,13 @@ import java.util.Optional;
 import static arraysort.todolist.utils.UserUtil.getCurrentLoginUserId;
 
 @RequiredArgsConstructor
+@Slf4j
 @Service
 public class TodoListService {
 
     private final TodoListMapper todoListMapper;
+
+    private final ImageService imageService;
 
     @Transactional
     public void addTodo(TodoAddDto todoAddDto) {
@@ -41,7 +45,9 @@ public class TodoListService {
                 .map(TodoListDto::of)
                 .toList();
 
-        return new PaginationDto(totalCount, currentPage, todoDone, todoListDto);
+        String savedImage = imageService.findImageByUserId(getCurrentLoginUserId());
+
+        return new PaginationDto(totalCount, currentPage, todoDone, todoListDto, savedImage);
     }
 
     @Transactional(readOnly = true)

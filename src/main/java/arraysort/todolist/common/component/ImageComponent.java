@@ -22,7 +22,6 @@ import java.util.UUID;
 public class ImageComponent {
 
     private static final List<String> ALLOWED_EXTENSIONS = List.of("jpg", "jpeg", "png");
-    private static final String DEFAULT_IMAGE = "userProfile.png";
 
     @Value("${file.upload-path}")
     private String uploadPath;
@@ -37,9 +36,10 @@ public class ImageComponent {
      */
     public ImageDto uploadImage(String userId, MultipartFile multipartFile) {
         if (multipartFile == null || multipartFile.isEmpty()) {
-            return getDefaultImageDto(userId);
+            return null; // 이미지 파일이 없을 경우 null 전송
         }
 
+        // 저장된 이미지 이름 지정, 저장소 디렉터리 생성을 위한 현재날짜, 생성된 디렉터리 주소 초기화
         String savedName = generateSavedFileName(multipartFile.getOriginalFilename());
         String today = LocalDate.now().format(DateTimeFormatter.ofPattern("yyMMdd"));
         Path uploadDirPath = makeDirectories(Paths.get(uploadPath, today));
@@ -52,26 +52,12 @@ public class ImageComponent {
             throw new ImageUploadException("파일 업로드 에러 발생");
         }
 
+        // 이미지 파일이 있는 경우 /upload-images/현재날짜/저장된이름 경로를 포함하여 Dto 반환
         return ImageDto.builder()
                 .userId(userId)
                 .originalName(multipartFile.getOriginalFilename())
-                .savedName(savedName)
+                .savedName(String.format("/upload-images/%s/%s", today, savedName))
                 .imageSize(multipartFile.getSize())
-                .build();
-    }
-
-    /**
-     * 기본 이미지 DTO 생성
-     *
-     * @param userId 사용자 아이디
-     * @return 기본 이미지 DTO
-     */
-    private ImageDto getDefaultImageDto(String userId) {
-        return ImageDto.builder()
-                .userId(userId)
-                .originalName(DEFAULT_IMAGE)
-                .savedName(DEFAULT_IMAGE)
-                .imageSize(0) // 기본 이미지의 경우 사이즈는 0
                 .build();
     }
 
@@ -107,6 +93,7 @@ public class ImageComponent {
             log.error("디렉터리 생성 실패 : {}", path, e);
             throw new ImageUploadException("디렉터리 생성 실패");
         }
+        
         return path;
     }
 }

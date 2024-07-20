@@ -8,7 +8,10 @@
 
 <div class="container" style="max-width: 800px; margin-top: 10px;">
 
-    <div class="py-5 text-center"><h2 th:text="|${userName}| + '\'s TODO LIST'">USER's TODO LIST</h2></div>
+    <div class="py-4 text-center d-flex align-items-center justify-content-center">
+        <img alt="User Profile Image" class="user-profile-image" th:src="@{${pagination.getSavedImage()}}">
+        <h2 style="margin-left: 10px" th:text="|${userName}| + '\'s TODO LIST'">USER's TODO LIST</h2>
+    </div>
 
     <!--일정 등록 로그아웃 버튼-->
     <div class="row">

@@ -32,4 +32,4 @@ mybatis:
 
 file:
   upload-path: /Users/an-yeongjun/Desktop/project/image
-#  stored-upload-path: /Users/an-yeongjun/Desktop/project/image
+  stored-path: file:///Users/an-yeongjun/Desktop/project/image/

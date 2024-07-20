@@ -13,6 +13,7 @@ public class PaginationDto {
     private final int pageCount;                  // 페이지 블럭에 보여줄 페이지 개수
     private final boolean done;                   // 완료 페이지 여부
     private final List<TodoListDto> todoListDto;  // 페이지에 보여질 리스트
+    private final String savedImage;              // 저장소에 저장된 이미지 경로
 
     private int startPage = 1;        // 블럭의 시작 페이지
     private int endPage;              // 블럭의 마지막 페이지
@@ -21,13 +22,14 @@ public class PaginationDto {
     private boolean isNext = false;   // 이전 페이지 버튼 유무
     private int offset;               // 리스트를 얼마나 끊어줄지
 
-    public PaginationDto(int totalCount, int currentPage, boolean done, List<TodoListDto> todoListDto) {
+    public PaginationDto(int totalCount, int currentPage, boolean done, List<TodoListDto> todoListDto, String savedImage) {
         this.totalCount = totalCount;
         this.currentPage = currentPage;
         this.rowCount = 10;
         this.pageCount = 5;
         this.todoListDto = todoListDto;
         this.done = done;
+        this.savedImage = savedImage;
         setPagination();
     }
 
