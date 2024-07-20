@@ -4,9 +4,9 @@
 
 <mapper namespace="arraysort.todolist.mapper.ImageMapper">
 
-    <select id="insertImage">
+    <insert id="insertImage">
         insert into image(user_id, original_name, saved_name, image_size)
         values (#{userId}, #{originalName}, #{savedName}, #{imageSize})
-    </select>
+    </insert>
 
 </mapper>
