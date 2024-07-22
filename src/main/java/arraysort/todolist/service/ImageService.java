@@ -4,6 +4,7 @@ package arraysort.todolist.service;
 import arraysort.todolist.domain.ImageDto;
 import arraysort.todolist.mapper.ImageMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,11 +14,11 @@ public class ImageService {
 
     private final ImageMapper imageMapper;
 
+    @Value("${file.default-image}")
+    private String defaultImage;
+
     @Transactional
     public void addImage(ImageDto imageDto) {
-        if (imageDto == null) {
-            return;
-        }
         imageMapper.insertImage(imageDto);
     }
 
@@ -25,11 +26,6 @@ public class ImageService {
     public String findImageByUserId(String userId) {
         String savedName = imageMapper.findSavedImageNameByUserId(userId);
 
-        // 저장된 이미지가 없을 때 기본 이미지 경로 반환
-        if (savedName == null) {
-            return "/images/userProfile.png";
-        }
-
-        return savedName;
+        return (savedName == null || savedName.isBlank()) ? defaultImage : savedName;
     }
 }

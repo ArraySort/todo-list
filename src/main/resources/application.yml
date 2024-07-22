@@ -33,3 +33,5 @@ mybatis:
 file:
   upload-path: /Users/an-yeongjun/Desktop/project/image
   stored-path: file:///Users/an-yeongjun/Desktop/project/image/
+  default-image: /images/userProfile.png
+  allowed-extensions: jpg,jpeg,png

@@ -21,10 +21,11 @@ import java.util.UUID;
 @Component
 public class ImageComponent {
 
-    private static final List<String> ALLOWED_EXTENSIONS = List.of("jpg", "jpeg", "png");
-
     @Value("${file.upload-path}")
-    private String uploadPath;
+    private String uploadPath; // 업로드 경로
+
+    @Value("${file.allowed-extensions}")
+    private String allowedExtensions; // 허용된 확장자
 
     /**
      * 이미지 업로드
@@ -32,7 +33,7 @@ public class ImageComponent {
      *
      * @param userId        회원가입 시 기입한 사용자 아이디
      * @param multipartFile 이미지 파일
-     * @return ImageDto : userId, originalName, savedName, imageSize
+     * @return ImageDto : userId, originalName, savedName(저장된 경로), imageSize
      */
     public ImageDto uploadImage(String userId, MultipartFile multipartFile) {
         if (multipartFile == null || multipartFile.isEmpty()) {
@@ -48,15 +49,15 @@ public class ImageComponent {
         try {
             multipartFile.transferTo(uploadImage);
         } catch (IOException e) {
-            log.error("파일 업로드 에러 : {}", multipartFile.getOriginalFilename(), e);
-            throw new ImageUploadException("파일 업로드 에러 발생");
+            log.error("이미지 업로드 에러 : {}", multipartFile.getOriginalFilename(), e);
+            throw new ImageUploadException("이미지 업로드 에러 발생");
         }
 
         // 이미지 파일이 있는 경우 /upload-images/현재날짜/저장된이름 경로를 포함하여 Dto 반환
         return ImageDto.builder()
                 .userId(userId)
                 .originalName(multipartFile.getOriginalFilename())
-                .savedName(String.format("/upload-images/%s/%s", today, savedName))
+                .savedName("/upload-images/" + today + "/" + savedName) // 업로드 된 이미지가 DB 에 저장된 이름
                 .imageSize(multipartFile.getSize())
                 .build();
     }
@@ -70,9 +71,10 @@ public class ImageComponent {
     private String generateSavedFileName(final String imageName) {
         String uuid = UUID.randomUUID().toString().replace("-", "");
         String extension = StringUtils.getFilenameExtension(imageName);
+        List<String> allowedEx = List.of(allowedExtensions.split(","));
 
-        if (extension == null || !ALLOWED_EXTENSIONS.contains(extension.toLowerCase())) {
-            throw new ImageUploadException("지원하지 않는 확장자입니다. 지원 형식 : [jpg, jpeg, png]");
+        if (extension == null || !allowedEx.contains(extension.toLowerCase())) {
+            throw new ImageUploadException("지원하지 않는 확장자입니다. 지원 형식 : " + allowedEx);
         }
 
         return uuid + "." + extension;

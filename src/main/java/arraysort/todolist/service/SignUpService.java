@@ -36,6 +36,10 @@ public class SignUpService {
         ImageDto image = imageComponent.uploadImage(signupDto.getUserId(), signupDto.getImageFile());
 
         signUpMapper.insertUser(userVO);
-        imageService.addImage(image);
+
+        // 이미지가 업로드 되지 않고 기본 이미지 일 때 호출하지 않음
+        if (image != null) {
+            imageService.addImage(image);
+        }
     }
 }

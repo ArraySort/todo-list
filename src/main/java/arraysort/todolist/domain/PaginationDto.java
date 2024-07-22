@@ -23,7 +23,7 @@ public class PaginationDto {
     private int offset;               // 리스트를 얼마나 끊어줄지
 
     public PaginationDto(int totalCount, int currentPage, boolean done, List<TodoListDto> todoListDto, String savedImage) {
-        this.totalCount = totalCount;
+        this.totalCount = totalCount == 0 ? 1 : totalCount;
         this.currentPage = currentPage;
         this.rowCount = 10;
         this.pageCount = 5;
