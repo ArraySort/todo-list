@@ -17,8 +17,11 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException {
-        PrintWriter out = response.getWriter();
+
         response.setContentType("text/html;charset=UTF-8");
+
+        PrintWriter out = response.getWriter();
+
         out.println("<script>alert('아이디와 비밀번호를 다시 확인해주세요.'); history.go(-1);</script>");
         out.flush();
     }
