@@ -17,12 +17,13 @@ public class SignUpController {
 
     private final SignUpService signupService;
 
+    // 회원가입 페이지
     @GetMapping
-
     public String signup() {
         return "signup";
     }
 
+    // 회원가입 요청
     @PostMapping
     public String userAdd(@Valid @ModelAttribute("user") SignupDto signupDto) {
         signupService.addUser(signupDto);

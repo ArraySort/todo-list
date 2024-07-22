@@ -5,18 +5,15 @@ import arraysort.todolist.exception.CheckedNotFoundException;
 import arraysort.todolist.exception.DetailNotFoundException;
 import arraysort.todolist.exception.IdNotFoundException;
 import arraysort.todolist.mapper.TodoListMapper;
+import arraysort.todolist.utils.UserUtil;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
-import static arraysort.todolist.utils.UserUtil.getCurrentLoginUserId;
-
 @RequiredArgsConstructor
-@Slf4j
 @Service
 public class TodoListService {
 
@@ -32,12 +29,11 @@ public class TodoListService {
 
     @Transactional(readOnly = true)
     public PaginationDto findTodoListWithPaging(int currentPage, boolean todoDone) {
-        int totalCount = todoListMapper.selectTotalCount(getCurrentLoginUserId(), todoDone);
-        totalCount = totalCount == 0 ? 1 : totalCount;
+        int totalCount = todoListMapper.selectTotalCount(UserUtil.getCurrentLoginUserId(), todoDone);
         int offset = (currentPage - 1) * 10;
 
         List<TodoListDto> todoListDto = todoListMapper.selectTodoListByUserId(
-                        getCurrentLoginUserId(),
+                        UserUtil.getCurrentLoginUserId(),
                         todoDone,
                         10,
                         offset)
@@ -45,20 +41,20 @@ public class TodoListService {
                 .map(TodoListDto::of)
                 .toList();
 
-        String savedImage = imageService.findImageByUserId(getCurrentLoginUserId());
+        String savedImage = imageService.findImageByUserId(UserUtil.getCurrentLoginUserId());
 
         return new PaginationDto(totalCount, currentPage, todoDone, todoListDto, savedImage);
     }
 
     @Transactional(readOnly = true)
     public TodoDetailDto findTodoDetailByTodoId(long todoId) {
-        return TodoDetailDto.of(todoListMapper.selectTodoDetailByTodoId(todoId, getCurrentLoginUserId())
+        return TodoDetailDto.of(todoListMapper.selectTodoDetailByTodoId(todoId, UserUtil.getCurrentLoginUserId())
                 .orElseThrow(DetailNotFoundException::new));
     }
 
     @Transactional
     public void modifyTodo(long todoId, TodoUpdateDto todoUpdateDto) {
-        TodoVO todoVO = todoListMapper.selectTodoDetailByTodoId(todoId, getCurrentLoginUserId())
+        TodoVO todoVO = todoListMapper.selectTodoDetailByTodoId(todoId, UserUtil.getCurrentLoginUserId())
                 .orElseThrow(DetailNotFoundException::new);
         todoVO.update(todoUpdateDto);
         todoListMapper.updateTodo(todoId, todoVO);
@@ -66,7 +62,7 @@ public class TodoListService {
 
     @Transactional
     public void removeTodo(long todoId) {
-        Optional<Integer> existTodoId = todoListMapper.selectExistTodoId(todoId, getCurrentLoginUserId());
+        Optional<Integer> existTodoId = todoListMapper.selectExistTodoId(todoId, UserUtil.getCurrentLoginUserId());
         if (existTodoId.isEmpty()) {
             throw new IdNotFoundException();
         }
@@ -76,8 +72,8 @@ public class TodoListService {
 
     @Transactional
     public void modifyTodoDone(List<Long> checkedTodoIds, List<Long> allTodoIds) {
-        List<Long> validCheckedTodoIds = checkedTodoIds.isEmpty() ? List.of() : todoListMapper.selectExistTodoIdList(checkedTodoIds, getCurrentLoginUserId());
-        List<Long> validAllTodoIds = allTodoIds.isEmpty() ? List.of() : todoListMapper.selectExistTodoIdList(allTodoIds, getCurrentLoginUserId());
+        List<Long> validCheckedTodoIds = checkedTodoIds.isEmpty() ? List.of() : todoListMapper.selectExistTodoIdList(checkedTodoIds, UserUtil.getCurrentLoginUserId());
+        List<Long> validAllTodoIds = allTodoIds.isEmpty() ? List.of() : todoListMapper.selectExistTodoIdList(allTodoIds, UserUtil.getCurrentLoginUserId());
 
         if (checkedTodoIds.size() != validCheckedTodoIds.size() || allTodoIds.size() != validAllTodoIds.size()) {
             throw new IdNotFoundException();
@@ -102,7 +98,7 @@ public class TodoListService {
             throw new CheckedNotFoundException();
         }
 
-        List<Long> validCheckedTodoIds = todoListMapper.selectExistTodoIdList(checkedTodoIds, getCurrentLoginUserId());
+        List<Long> validCheckedTodoIds = todoListMapper.selectExistTodoIdList(checkedTodoIds, UserUtil.getCurrentLoginUserId());
 
         if (checkedTodoIds.size() != validCheckedTodoIds.size()) {
             throw new IdNotFoundException();

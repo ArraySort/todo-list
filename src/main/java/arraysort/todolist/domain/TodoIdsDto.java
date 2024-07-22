@@ -9,7 +9,7 @@ import java.util.List;
 @AllArgsConstructor
 public class TodoIdsDto {
 
-    private List<Long> todoIds;
+    private List<Long> checkedTodoIds;
 
     private List<Long> allTodoIds;
 
