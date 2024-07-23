@@ -5,6 +5,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.servlet.ModelAndView;
 
 @ControllerAdvice
@@ -35,9 +36,15 @@ public class GlobalExceptionHandler {
         return getModelAndView("선택된 일정이 없습니다.");
     }
 
+    // 이미지 업로드 관련 예외
     @ExceptionHandler(ImageUploadException.class)
     public ModelAndView handleImageUploadException(ImageUploadException e) {
         return getModelAndView(e.getMessage());
+    }
+
+    @ExceptionHandler(MaxUploadSizeExceededException.class)
+    public ModelAndView handleMaxUploadSizeExceededException() {
+        return getModelAndView("허용된 업로드 이미지 용량을 초과했습니다.");
     }
 
     // @Valid 유효성 검증에 대한 예외

@@ -20,11 +20,12 @@ spring:
     suffix: .html
     enabled: true
 
-  messages:
-    basename: errors
+  # 파일(이미지) 업로드 최대 크기 설정
+  servlet:
+    multipart:
+      max-file-size: 2MB
+      max-request-size: 2MB
 
-#  resources:
-#    static-locations: "file:src/main/resources/static"
 
 # mybatis mapper 경로 설정
 mybatis:

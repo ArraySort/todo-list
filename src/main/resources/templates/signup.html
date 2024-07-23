@@ -63,11 +63,16 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        $('#submit').on('click', function (e) {
 
+        const MAX_FILE_SIZE = 1024 * 1024 * 2; // 2MB
+        const defaultImageSrc = 'path/to/userProfile.png'; // 기본 이미지 경로
+
+
+        $('#submit').on('click', function (e) {
             const userId = $('#userId')
             const userPassword = $('#userPassword')
             const userName = $('#userName');
+            const file = $('#imageFile')[0].files[0];
 
             userId.removeClass('error');
             userPassword.removeClass('error');
@@ -90,8 +95,16 @@
                 alert('닉네임은 최소 2글자 이상, 최대 20글자 이하입니다.')
                 userName.focus();
             }
+
+            // 이미지 파일 크기 제한 : 2MB
+            if (file && file.size > MAX_FILE_SIZE) {
+                e.preventDefault();
+                alert('이미지 크기는 2MB를 초과할 수 없습니다.');
+                return false;
+            }
         });
 
+        // 업로드 이미지 미리보기
         $('#imageFile').on('change', function () {
             const file = this.files[0];
             if (file) {
@@ -101,7 +114,7 @@
                 };
                 reader.readAsDataURL(file);
             } else {
-                $('#imagePreview').attr('src', 'path/to/userProfile.png').show();
+                $('#imagePreview').attr('src', defaultImageSrc).show();
             }
         });
     });
