@@ -75,6 +75,7 @@
                     <th>TODO</th>
                     <th>시작시간</th>
                     <th>종료시간</th>
+                    <th>남은시간</th>
                     <th>우선순위</th>
                     <th>상태&ensp;
                         <label>
@@ -90,6 +91,7 @@
                            th:text="${list.todoTitle}"></a></td>
                     <td th:text="${list.todoStart.substring(0, list.todoStart.length()-3)}">yyyy-MM-dd HH:mm</td>
                     <td th:text="${list.todoEnd.substring(0, list.todoEnd.length()-3)}">yyyy-MM-dd HH:mm</td>
+                    <td class="remaining-time"></td>
                     <td th:text="${list.todoPriority}"></td>
                     <td>
                         <div class="form-check">
@@ -172,6 +174,34 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+        function calculateRemainingTime(end) {
+            const now = new Date();
+            const endTime = new Date(end);
+            const diff = endTime - now;
+
+            if (diff <= 0) {
+                return "시간 초과";
+            }
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
+            return `${days}일 ${hours}시간 ${minutes}분`;
+        }
+
+        function updateRemainingTimes() {
+            console.log("update");
+            $('tbody tr').each(function () {
+                const end = $(this).find('td').eq(3).text();
+                const remainingTime = calculateRemainingTime(end);
+                $(this).find('.remaining-time').text(remainingTime);
+            });
+        }
+
+        updateRemainingTimes();
+        setInterval(updateRemainingTimes, 60000);
+
         // 상태 반영 시
         $('#updateTodoDone').on('submit', function (event) {
             const checkedTodoIds = $('input[name="checkedTodoIds"]:checked');
