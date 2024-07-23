@@ -84,7 +84,7 @@
                             <label class="form-check-label" for="flexCheckDefault">
                                 <input class="form-check-input"
                                        id="flexCheckDefault"
-                                       name="todoIds"
+                                       name="checkedTodoIds"
                                        th:checked="${list.todoDone}"
                                        th:value="${list.todoId}"
                                        type="checkbox">
@@ -98,7 +98,7 @@
         </form>
 
         <form id="deleteTodosForm" method="post" th:action="@{/todo/list/deleteTodos}">
-            <input id="deleteTodoIds" name="todoIds" type="hidden">
+            <input id="deleteTodoIds" name="checkedTodoIds" type="hidden">
         </form>
     </div>
     <!--리스트 테이블 종료-->
@@ -158,16 +158,30 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        // 완료된 일정 이벤트 핸들러
+        // 상태 반영 시
         $('#updateTodoDone').on('submit', function (event) {
-            const todoIds = $('input[name="todoIds"]:checked');
-            if (todoIds.length === 0) {
+            const checkedTodoIds = $('input[name="checkedTodoIds"]:checked');
+            const allTodoIds = $('input[name="allTodoIds"]');
+
+            // 체크된 항목이 없을 때 빈 리스트 반환
+            if (checkedTodoIds.length === 0) {
                 event.preventDefault();
-                const hiddenInput = $('<input>')
+                const hiddenInputCheckedTodo = $('<input>')
                     .attr('type', 'hidden')
-                    .attr('name', 'todoIds')
+                    .attr('name', 'checkedTodoIds')
                     .attr('value', '');
-                $(this).append(hiddenInput);
+                $(this).append(hiddenInputCheckedTodo);
+                this.submit();
+            }
+
+            // 일정이 없을 때 빈 리스트 반환
+            if (allTodoIds.length === 0) {
+                event.preventDefault();
+                const hiddenInputAllTodo = $('<input>')
+                    .attr('type', 'hidden')
+                    .attr('name', 'allTodoIds')
+                    .attr('value', '');
+                $(this).append(hiddenInputAllTodo);
                 this.submit();
             }
         });
@@ -176,23 +190,24 @@
         $('#selectAllCheckboxes').on('change', function () {
             if (this.checked) {
                 // 전체 체크박스 선택
-                $('input[name="todoIds"]').prop('checked', true);
+                $('input[name="checkedTodoIds"]').prop('checked', true);
             } else {
                 // 전체 체크박스 해제
-                $('input[name="todoIds"]').prop('checked', false);
+                $('input[name="checkedTodoIds"]').prop('checked', false);
             }
         });
 
         // 삭제 버튼 이벤트 핸들러
         $('#deleteButton').on('click', function (event) {
-            const selectedTodoIds = $('input[name="todoIds"]:checked').map(function () {
+            const checkedTodoIds = $('input[name="checkedTodoIds"]:checked').map(function () {
                 return $(this).val();
             }).get();
 
-            if (selectedTodoIds.length > 0) {
-                $('#deleteTodosForm input[name="todoIds"]').val(selectedTodoIds.join(','));
+            // 체크한 일정이 하나 이상일 때
+            if (checkedTodoIds.length > 0) {
+                $('#deleteTodosForm input[name="checkedTodoIds"]').val(checkedTodoIds.join(','));
                 $('#deleteTodosForm').submit();
-            } else {
+            } else { // 체크한 일정이 없다면 alert
                 event.preventDefault();
                 alert('삭제할 일정을 선택해주세요.');
             }

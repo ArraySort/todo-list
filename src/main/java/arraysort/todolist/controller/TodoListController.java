@@ -30,7 +30,7 @@ public class TodoListController {
 
     // 일정 완료 및 미완료 처리 요청
     @PostMapping("/list/updateTodoDone")
-    public String todoListDoneCheck(@ModelAttribute TodoIdsDto todoIdsDto) {
+    public String todoListDoneCheck(@Valid @ModelAttribute TodoIdsDto todoIdsDto) {
         todoListService.modifyTodoDone(todoIdsDto.getCheckedTodoIds(), todoIdsDto.getAllTodoIds());
         return "redirect:/todo/list";
     }
