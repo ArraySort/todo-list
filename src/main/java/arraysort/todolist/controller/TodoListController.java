@@ -40,7 +40,7 @@ public class TodoListController {
 
     // 선택된 일정 삭제 요청
     @PostMapping("/list/deleteTodos")
-    public String removeCheckedTodos(@ModelAttribute TodoIdsDto todoIdsDto) {
+    public String removeCheckedTodos(@Valid @ModelAttribute TodoIdsDto todoIdsDto) {
         todoListService.removeCheckedTodos(todoIdsDto.getCheckedTodoIds());
         return "redirect:/todo/list?done=" + todoIdsDto.isTodoDone();
     }

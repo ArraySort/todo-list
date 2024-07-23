@@ -29,16 +29,17 @@
                 </button>
             </div>
 
+            <!--검색기능 : 제목 입력-->
             <form class="d-flex ms-auto" method="get" th:action="@{/todo/list}">
-                <input name="todoDone" th:value="${pagination.isDone()}" type="hidden"/>
+                <input name="done" th:value="${pagination.isDone()}" type="hidden"/>
                 <div class="input-group">
-                    <input aria-label="제목을 입력하세요."
-                           class="form-control"
-                           name="searchTitle"
-                           placeholder="제목을 입력하세요."
-                           th:value="${searchTitle}"
-                           type="text">
-                    <button class="btn btn-outline-secondary" id="button-addon2" type="submit">검색</button>
+                    <label>
+                        <input class="form-control"
+                               name="searchTitle"
+                               placeholder="제목을 입력하세요."
+                               type="text">
+                    </label>
+                    <button class="btn btn-outline-primary" type="submit">검색</button>
                 </div>
             </form>
 
@@ -110,6 +111,7 @@
 
         <form id="deleteTodosForm" method="post" th:action="@{/todo/list/deleteTodos}">
             <input id="deleteTodoIds" name="checkedTodoIds" type="hidden">
+            <input name="allTodoIds" type="hidden"/>
             <input name="todoDone" th:value="${pagination.isDone()}" type="hidden"/>
         </form>
     </div>
@@ -215,9 +217,14 @@
                 return $(this).val();
             }).get();
 
+            const allTodoIds = $('input[name="allTodoIds"]').map(function () {
+                return $(this).val();
+            }).get();
+
             // 체크한 일정이 하나 이상일 때
             if (checkedTodoIds.length > 0) {
                 $('#deleteTodosForm input[name="checkedTodoIds"]').val(checkedTodoIds.join(','));
+                $('#deleteTodosForm input[name="allTodoIds"]').val(allTodoIds.join(','));
                 $('#deleteTodosForm').submit();
             } else { // 체크한 일정이 없다면 alert
                 event.preventDefault();
