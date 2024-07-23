@@ -11,8 +11,11 @@ public class TodoListPageDto {
 
     private boolean done;
 
+    private String searchTitle;
+
     public TodoListPageDto() {
         this.page = 1;
         this.done = false;
+        this.searchTitle = "";
     }
 }

@@ -28,13 +28,14 @@ public class TodoListService {
     }
 
     @Transactional(readOnly = true)
-    public PaginationDto findTodoListWithPaging(int currentPage, boolean todoDone) {
-        int totalCount = todoListMapper.selectTotalCount(UserUtil.getCurrentLoginUserId(), todoDone);
+    public PaginationDto findTodoListWithPaging(int currentPage, boolean todoDone, String searchTitle) {
+        int totalCount = todoListMapper.selectTotalCount(UserUtil.getCurrentLoginUserId(), todoDone, searchTitle);
         int offset = (currentPage - 1) * 10;
 
         List<TodoListDto> todoListDto = todoListMapper.selectTodoListByUserId(
                         UserUtil.getCurrentLoginUserId(),
                         todoDone,
+                        searchTitle,
                         10,
                         offset)
                 .stream()

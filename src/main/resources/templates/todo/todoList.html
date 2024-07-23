@@ -6,7 +6,7 @@
 
 <body>
 
-<div class="container" style="max-width: 800px; margin-top: 10px;">
+<div class="container" style="max-width: 850px; margin-top: 35px;">
 
     <div class="py-4 text-center d-flex align-items-center justify-content-center">
         <img alt="User Profile Image" class="user-profile-image" th:src="@{${pagination.getSavedImage()}}">
@@ -14,38 +14,48 @@
     </div>
 
     <!--일정 등록 로그아웃 버튼-->
-    <div class="row">
-        <div class="col">
-            <div>
-                <button class="btn btn-outline-primary float-start"
-                        style="margin-right: 5px"
+    <div class="row mb-3">
+        <div class="col d-flex align-items-center">
+            <div class="btn-group" role="group">
+                <button class="btn btn-outline-primary"
                         th:classappend="${pagination.isDone() == true} ? 'active'"
                         th:onclick="|location.href='@{/todo/list(done=true)}'|"
                         type="button">완료된 일정
                 </button>
-                <button class="btn btn-outline-primary float-start"
+                <button class="btn btn-outline-primary"
                         th:classappend="${pagination.isDone() == false} ? 'active'"
                         th:onclick="|location.href='@{/todo/list(done=false)}'|"
                         type="button">미완료 일정
                 </button>
             </div>
-            <div>
-                <button class="btn btn-outline-primary float-end"
-                        form="deleteTodosForm"
-                        id="deleteButton"
-                        style="margin-left: 5px"
-                        type="submit">완료 일정 삭제
-                </button>
-                <button class="btn btn-outline-primary float-end"
-                        style="margin-left: 5px"
-                        th:onclick="|location.href='@{add}'|"
-                        type="button">일정 등록
-                </button>
-                <button class="btn btn-outline-primary float-end"
+
+            <form class="d-flex ms-auto" method="get" th:action="@{/todo/list}">
+                <input name="todoDone" th:value="${pagination.isDone()}" type="hidden"/>
+                <div class="input-group">
+                    <input aria-label="제목을 입력하세요."
+                           class="form-control"
+                           name="searchTitle"
+                           placeholder="제목을 입력하세요."
+                           th:value="${searchTitle}"
+                           type="text">
+                    <button class="btn btn-outline-secondary" id="button-addon2" type="submit">검색</button>
+                </div>
+            </form>
+
+            <div class="ms-auto btn-group" role="group">
+                <button class="btn btn-outline-primary"
                         form="updateTodoDone"
                         type="submit">상태 반영
                 </button>
-
+                <button class="btn btn-outline-primary"
+                        th:onclick="|location.href='@{add}'|"
+                        type="button">일정 등록
+                </button>
+                <button class="btn btn-outline-primary"
+                        form="deleteTodosForm"
+                        id="deleteButton"
+                        type="submit">일정 삭제
+                </button>
             </div>
         </div>
     </div>
@@ -56,6 +66,7 @@
     <!--리스트 테이블-->
     <div style="height: 400px; overflow-y: auto">
         <form id="updateTodoDone" method="post" th:action="@{/todo/list/updateTodoDone}">
+            <input name="todoDone" th:value="${pagination.isDone()}" type="hidden"/>
             <table class="table">
                 <thead>
                 <tr class="text-center">
@@ -99,6 +110,7 @@
 
         <form id="deleteTodosForm" method="post" th:action="@{/todo/list/deleteTodos}">
             <input id="deleteTodoIds" name="checkedTodoIds" type="hidden">
+            <input name="todoDone" th:value="${pagination.isDone()}" type="hidden"/>
         </form>
     </div>
     <!--리스트 테이블 종료-->

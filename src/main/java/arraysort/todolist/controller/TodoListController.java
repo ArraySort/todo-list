@@ -21,7 +21,10 @@ public class TodoListController {
     // 할 일 목록 페이지
     @GetMapping("/list")
     public String todoList(@ModelAttribute TodoListPageDto todoListPageDto, Model model) {
-        PaginationDto paginationDto = todoListService.findTodoListWithPaging(todoListPageDto.getPage(), todoListPageDto.isDone());
+        PaginationDto paginationDto = todoListService.findTodoListWithPaging(
+                todoListPageDto.getPage(),
+                todoListPageDto.isDone(),
+                todoListPageDto.getSearchTitle());
 
         model.addAttribute("pagination", paginationDto);
         model.addAttribute("userName", authService.findUserNameByUserId());
@@ -32,14 +35,14 @@ public class TodoListController {
     @PostMapping("/list/updateTodoDone")
     public String todoListDoneCheck(@Valid @ModelAttribute TodoIdsDto todoIdsDto) {
         todoListService.modifyTodoDone(todoIdsDto.getCheckedTodoIds(), todoIdsDto.getAllTodoIds());
-        return "redirect:/todo/list";
+        return "redirect:/todo/list?done=" + todoIdsDto.isTodoDone();
     }
 
     // 선택된 일정 삭제 요청
     @PostMapping("/list/deleteTodos")
     public String removeCheckedTodos(@ModelAttribute TodoIdsDto todoIdsDto) {
         todoListService.removeCheckedTodos(todoIdsDto.getCheckedTodoIds());
-        return "redirect:/todo/list";
+        return "redirect:/todo/list?done=" + todoIdsDto.isTodoDone();
     }
 
     // 일정 등록 페이지

@@ -24,16 +24,19 @@
 
     <select id="selectTodoListByUserId" resultType="arraysort.todolist.domain.TodoVO">
         select todo_id,
-               user_id,
-               todo_title,
-               todo_content,
-               todo_start,
-               todo_end,
-               todo_priority,
-               todo_done
+        user_id,
+        todo_title,
+        todo_content,
+        todo_start,
+        todo_end,
+        todo_priority,
+        todo_done
         from todo
         where user_id = #{userId}
-          and todo_done = #{todoDone}
+        and todo_done = #{todoDone}
+        <if test="searchTitle != null and searchTitle != ''">
+            and todo_title like concat('%', #{searchTitle}, '%')
+        </if>
         order by todo_id desc
         limit #{rowCount} offset #{offset}
     </select>
@@ -79,7 +82,10 @@
         select count(*)
         from todo
         where user_id = #{userId}
-          and todo_done = #{todoDone}
+        and todo_done = #{todoDone}
+        <if test="searchTitle != null and searchTitle != ''">
+            and todo_title like concat('%', #{searchTitle}, '%')
+        </if>
     </select>
 
     <update id="updateTodoDone" parameterType="Long">
