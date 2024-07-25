@@ -1,5 +1,6 @@
 package arraysort.todolist.mapper;
 
+import arraysort.todolist.domain.TodoListQueryDto;
 import arraysort.todolist.domain.TodoVO;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -11,7 +12,7 @@ public interface TodoListMapper {
 
     void insertTodo(TodoVO todoVO);
 
-    List<TodoVO> selectTodoListByUserId(String userId, boolean todoDone, String searchTitle, int rowCount, int offset);
+    List<TodoVO> selectTodoListByUserId(TodoListQueryDto todoListQueryDto);
 
     Optional<TodoVO> selectTodoDetailByTodoId(long todoId, String userId);
 

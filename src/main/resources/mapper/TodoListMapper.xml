@@ -21,7 +21,8 @@
                 #{todoDone});
     </insert>
 
-    <select id="selectTodoListByUserId" resultType="arraysort.todolist.domain.TodoVO">
+    <select id="selectTodoListByUserId" parameterType="arraysort.todolist.domain.TodoListQueryDto"
+            resultType="arraysort.todolist.domain.TodoVO">
         select todo_id,
                user_id,
                todo_title,
@@ -37,7 +38,7 @@
             and todo_title like concat('%', #{searchTitle}, '%')
         </if>
         order by todo_id desc
-        limit #{rowCount} offset #{offset}
+        limit #{limit} offset #{offset}
     </select>
 
     <select id="selectTodoDetailByTodoId" resultType="arraysort.todolist.domain.TodoVO">
