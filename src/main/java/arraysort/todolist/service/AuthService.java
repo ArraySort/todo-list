@@ -13,6 +13,7 @@ public class AuthService {
 
     private final AuthMapper authMapper;
 
+    // 로그인한 유저의 userName(닉네임) 조회
     @Transactional(readOnly = true)
     public String findUserNameByUserId() {
         return authMapper.selectUserNameByUserId(getCurrentLoginUserId());

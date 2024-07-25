@@ -19,18 +19,28 @@ public class SignUpService {
 
     private final PasswordEncoder passwordEncoder;
 
+    // 회원가입
     @Transactional
     public void addUser(SignupDto signupDto) {
-
-        if (signUpMapper.selectUserCountById(signupDto.getUserId()) != 0) {
-            throw new DuplicateUserException();
-        }
-
-        signupDto.encodePassword(passwordEncoder.encode(signupDto.getUserPassword()));
+        validAddUser(signupDto);
 
         UserVO userVO = UserVO.of(signupDto);
 
         signUpMapper.insertUser(userVO);
         imageService.addImage(signupDto);
+    }
+
+    /**
+     * 회원가입 시 중복회원 여부 확인
+     * 입력한 패스워드 인코딩 : PasswordEncoder
+     *
+     * @param signupDto 회원가입 폼에서 입력한 값 : userId, userPassword, userName, ImageFile
+     */
+    private void validAddUser(SignupDto signupDto) {
+        if (signUpMapper.selectUserCountById(signupDto.getUserId()) != 0) {
+            throw new DuplicateUserException();
+        }
+
+        signupDto.encodePassword(passwordEncoder.encode(signupDto.getUserPassword()));
     }
 }

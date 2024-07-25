@@ -19,6 +19,12 @@ public class LoginService implements UserDetailsService {
 
     private final LoginMapper loginMapper;
 
+    /**
+     * Spring Security 로그인
+     * @param username 유저아이디
+     * @return 유저 아이디로 조회한 결과
+     * @throws UsernameNotFoundException 아이디로 조회했을 때 없는 경우
+     */
     @Transactional(readOnly = true)
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -27,6 +33,12 @@ public class LoginService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException(username));
     }
 
+    /**
+     * Spring Security 로그인
+     * UserDetails 를 만들어주는 메서드
+     * @param user UserVO
+     * @return User 객체 -> loadUserByUsername 함수에 들어감
+     */
     private UserDetails createUserDetails(UserVO user) {
         return new User(
                 user.getUserId(),

@@ -22,6 +22,8 @@ public class ImageService {
     @Value("${file.default-image}")
     private String defaultImage;
 
+
+    // 이미지 추가
     @Transactional
     public void addImage(SignupDto signupDto) {
         ImageDto image = imageComponent.uploadImage(signupDto.getUserId(), signupDto.getImageFile());
@@ -31,6 +33,7 @@ public class ImageService {
         }
     }
 
+    // 이미지 조회
     @Transactional(readOnly = true)
     public String findImageByUserId(String userId) {
         String savedName = imageMapper.findSavedImageNameByUserId(userId);
