@@ -16,13 +16,15 @@ import org.springframework.security.web.SecurityFilterChain;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
+    private final String[] permittedUrls = {"/", "/login", "/logout-process", "/signup", "/error/**"};
+
     private final LoginFailureHandler loginFailureHandler;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/login", "/logout-process", "/signup", "/error/**").permitAll()
+                        .requestMatchers(permittedUrls).permitAll()
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                         .anyRequest()
                         .authenticated()

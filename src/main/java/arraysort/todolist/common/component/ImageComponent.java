@@ -2,6 +2,7 @@ package arraysort.todolist.common.component;
 
 import arraysort.todolist.domain.ImageDto;
 import arraysort.todolist.exception.ImageUploadException;
+import arraysort.todolist.utils.ValidationUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -36,15 +37,14 @@ public class ImageComponent {
      * @return ImageDto : userId, originalName, savedName(저장된 경로), imageSize
      */
     public ImageDto uploadImage(String userId, MultipartFile multipartFile) {
-        if (multipartFile == null || multipartFile.isEmpty()) {
+        if (ValidationUtil.isNullOrEmptyMultipartFile(multipartFile)) {
             return null; // 이미지 파일이 없을 경우 null 전송
         }
 
         // 저장된 이미지 이름 지정, 저장소 디렉터리 생성을 위한 현재날짜, 생성된 디렉터리 주소 초기화
         String savedName = generateSavedFileName(multipartFile.getOriginalFilename());
         String today = LocalDate.now().format(DateTimeFormatter.ofPattern("yyMMdd"));
-        Path uploadDirPath = makeDirectories(Paths.get(uploadPath, today));
-        Path uploadImage = uploadDirPath.resolve(savedName);
+        Path uploadImage = makeDirectories(Paths.get(uploadPath, today)).resolve(savedName);
 
         try {
             multipartFile.transferTo(uploadImage);

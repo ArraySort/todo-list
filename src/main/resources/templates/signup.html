@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.thymeleaf.org">
 <head th:replace="~{fragments/configFragment :: ConfigFragment}">
     <title>SignUp</title>
 </head>
@@ -61,12 +63,21 @@
     </form>
 </div>
 
-<script type="text/javascript">
+<div id="config"
+     th:data-default-image="${@environment.getProperty('file.default-image')}"
+     th:data-max-file-size="${@environment.getProperty('spring.servlet.multipart.max-file-size')}">
+</div>
+
+<script th:inline="javascript">
+    function parseSize(sizeStr) {
+        const sizeInMB = parseInt(sizeStr, 10);
+        return sizeInMB * 1024 * 1024;
+    }
+
     $(document).ready(function () {
-
-        const MAX_FILE_SIZE = 1024 * 1024 * 2; // 2MB
-        const defaultImageSrc = '/images/userProfile.png'; // 기본 이미지 경로
-
+        const config = $('#config');
+        const defaultImageSrc = config.data('defaultImage');            // 기본이미지 경로
+        const MAX_FILE_SIZE = parseSize(config.data('maxFileSize'));    // 업로드 파일 최대 용량
 
         $('#submit').on('click', function (e) {
             const userId = $('#userId')
