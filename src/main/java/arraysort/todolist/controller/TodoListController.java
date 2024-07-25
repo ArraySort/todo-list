@@ -2,7 +2,9 @@ package arraysort.todolist.controller;
 
 import arraysort.todolist.domain.*;
 import arraysort.todolist.service.AuthService;
+import arraysort.todolist.service.ImageService;
 import arraysort.todolist.service.TodoListService;
+import arraysort.todolist.utils.UserUtil;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -18,15 +20,15 @@ public class TodoListController {
 
     private final AuthService authService;
 
+    private final ImageService imageService;
+
     // 할 일 목록 페이지
     @GetMapping("/list")
     public String todoList(@ModelAttribute TodoListPageDto todoListPageDto, Model model) {
-        PaginationDto paginationDto = todoListService.findTodoListWithPaging(
-                todoListPageDto.getPage(),
-                todoListPageDto.isDone(),
-                todoListPageDto.getSearchTitle());
+        PaginationDto paginationDto = todoListService.findTodoListWithPaging(todoListPageDto);
 
         model.addAttribute("pagination", paginationDto);
+        model.addAttribute("userImage", imageService.findImageByUserId(UserUtil.getCurrentLoginUserId()));
         model.addAttribute("userName", authService.findUserNameByUserId());
         return "todo/todoList";
     }
@@ -35,14 +37,14 @@ public class TodoListController {
     @PostMapping("/list/updateTodoDone")
     public String todoListDoneCheck(@Valid @ModelAttribute TodoIdsDto todoIdsDto) {
         todoListService.modifyTodoDone(todoIdsDto.getCheckedTodoIds(), todoIdsDto.getAllTodoIds());
-        return "redirect:/todo/list?done=" + todoIdsDto.isTodoDone();
+        return "redirect:/todo/list?done=" + todoIdsDto.getTodoDone();
     }
 
     // 선택된 일정 삭제 요청
     @PostMapping("/list/deleteTodos")
     public String removeCheckedTodos(@Valid @ModelAttribute TodoIdsDto todoIdsDto) {
         todoListService.removeCheckedTodos(todoIdsDto.getCheckedTodoIds());
-        return "redirect:/todo/list?done=" + todoIdsDto.isTodoDone();
+        return "redirect:/todo/list?done=" + todoIdsDto.getTodoDone();
     }
 
     // 일정 등록 페이지

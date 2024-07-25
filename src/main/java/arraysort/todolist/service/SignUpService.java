@@ -1,7 +1,5 @@
 package arraysort.todolist.service;
 
-import arraysort.todolist.common.component.ImageComponent;
-import arraysort.todolist.domain.ImageDto;
 import arraysort.todolist.domain.SignupDto;
 import arraysort.todolist.domain.UserVO;
 import arraysort.todolist.exception.DuplicateUserException;
@@ -19,8 +17,6 @@ public class SignUpService {
 
     private final ImageService imageService;
 
-    private final ImageComponent imageComponent;
-
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
@@ -33,13 +29,8 @@ public class SignUpService {
         signupDto.encodePassword(passwordEncoder.encode(signupDto.getUserPassword()));
 
         UserVO userVO = UserVO.of(signupDto);
-        ImageDto image = imageComponent.uploadImage(signupDto.getUserId(), signupDto.getImageFile());
 
         signUpMapper.insertUser(userVO);
-
-        // 이미지가 업로드 되지 않고 기본 이미지 일 때 호출하지 않음
-        if (image != null) {
-            imageService.addImage(image);
-        }
+        imageService.addImage(signupDto);
     }
 }

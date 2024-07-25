@@ -6,6 +6,7 @@ import arraysort.todolist.exception.DetailNotFoundException;
 import arraysort.todolist.exception.IdNotFoundException;
 import arraysort.todolist.mapper.TodoListMapper;
 import arraysort.todolist.utils.UserUtil;
+import arraysort.todolist.utils.ValidationUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,8 +20,6 @@ public class TodoListService {
 
     private final TodoListMapper todoListMapper;
 
-    private final ImageService imageService;
-
     @Transactional
     public void addTodo(TodoAddDto todoAddDto) {
         TodoVO todoVO = TodoVO.of(todoAddDto);
@@ -28,23 +27,27 @@ public class TodoListService {
     }
 
     @Transactional(readOnly = true)
-    public PaginationDto findTodoListWithPaging(int currentPage, boolean todoDone, String searchTitle) {
-        int totalCount = todoListMapper.selectTotalCount(UserUtil.getCurrentLoginUserId(), todoDone, searchTitle);
-        int offset = (currentPage - 1) * 10;
+    public PaginationDto findTodoListWithPaging(TodoListPageDto todoListPageDto) {
+        int totalCount = todoListMapper.selectTotalCount(
+                UserUtil.getCurrentLoginUserId(),
+                todoListPageDto.isDone(),
+                todoListPageDto.getSearchTitle()
+        );
+
+        int offset = (todoListPageDto.getPage() - 1) * 10;
 
         List<TodoListDto> todoListDto = todoListMapper.selectTodoListByUserId(
                         UserUtil.getCurrentLoginUserId(),
-                        todoDone,
-                        searchTitle,
+                        todoListPageDto.isDone(),
+                        todoListPageDto.getSearchTitle(),
                         10,
                         offset)
                 .stream()
                 .map(TodoListDto::of)
                 .toList();
 
-        String savedImage = imageService.findImageByUserId(UserUtil.getCurrentLoginUserId());
 
-        return new PaginationDto(totalCount, currentPage, todoDone, todoListDto, savedImage);
+        return new PaginationDto(totalCount, todoListPageDto.getPage(), todoListPageDto.isDone(), todoListDto);
     }
 
     @Transactional(readOnly = true)
@@ -95,7 +98,7 @@ public class TodoListService {
 
     @Transactional
     public void removeCheckedTodos(List<Long> checkedTodoIds) {
-        if (checkedTodoIds == null || checkedTodoIds.isEmpty()) {
+        if (ValidationUtil.isNullOrEmptyList(checkedTodoIds)) {
             throw new CheckedNotFoundException();
         }
 

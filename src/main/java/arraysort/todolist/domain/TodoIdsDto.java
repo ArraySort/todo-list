@@ -16,6 +16,7 @@ public class TodoIdsDto {
     @NotNull(message = "일정이 존재하지 않습니다. 상태반영을 진행할 수 없습니다.")
     private List<Long> allTodoIds;
 
-    private boolean todoDone;
+    @NotNull
+    private Boolean todoDone;
 
 }
