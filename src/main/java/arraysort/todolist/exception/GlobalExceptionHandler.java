@@ -42,6 +42,7 @@ public class GlobalExceptionHandler {
         return getModelAndView(e.getMessage());
     }
 
+    // 이미지 업로드 최대 크기 예외
     @ExceptionHandler(MaxUploadSizeExceededException.class)
     public ModelAndView handleMaxUploadSizeExceededException() {
         return getModelAndView("허용된 업로드 이미지 용량을 초과했습니다.");
