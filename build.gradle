@@ -49,6 +49,9 @@ dependencies {
     // Thymeleaf 에서 Spring Security 를 사용하기 위한 라이브러리 추가
     implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
 
+    // SpringUtils 를 사용하기 위한 의존성 추가
+    implementation 'org.apache.commons:commons-lang3:3.12.0'
+
 }
 
 tasks.named('test') {
