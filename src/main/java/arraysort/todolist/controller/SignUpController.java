@@ -5,6 +5,7 @@ import arraysort.todolist.service.SignUpService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,8 +26,11 @@ public class SignUpController {
 
     // 회원가입 요청
     @PostMapping
-    public String userAdd(@Valid @ModelAttribute("user") SignupDto signupDto) {
+    public String userAdd(@Valid @ModelAttribute("user") SignupDto signupDto, Model model) {
         signupService.addUser(signupDto);
-        return "redirect:/login";
+
+        model.addAttribute("message", "회원가입이 정상적으로 처리되었습니다.");
+        model.addAttribute("url", "SIGNUP");
+        return "common/alert";
     }
 }

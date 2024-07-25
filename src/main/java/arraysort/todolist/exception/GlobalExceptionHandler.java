@@ -61,8 +61,8 @@ public class GlobalExceptionHandler {
     }
 
     private ModelAndView getModelAndView(String message) {
-        ModelAndView mav = new ModelAndView("error/alert");
-        mav.addObject("errorMessage", message);
+        ModelAndView mav = new ModelAndView("common/alert");
+        mav.addObject("message", message);
         return mav;
     }
 }

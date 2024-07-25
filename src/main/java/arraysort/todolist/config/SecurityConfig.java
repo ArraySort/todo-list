@@ -16,7 +16,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final String[] permittedUrls = {"/", "/login", "/logout-process", "/signup", "/error/**"};
+    private final String[] permittedUrls = {"/", "/login", "/logout-process", "/signup", "/common/**"};
 
     private final LoginFailureHandler loginFailureHandler;
 

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{fragments/configFragment :: ConfigFragment}">
+    <title>Error</title>
+</head>
+<body>
+
+<script th:inline="javascript">
+    const message = [[${message}]];
+    const targetUrl = [[${url}]];
+    const isDone = [[${done}]];
+    const todoId = [[${id}]];
+
+    if (message) {
+        alert(message);
+    }
+
+    if (targetUrl === "SIGNUP") {
+        window.location.href = "/login";
+    } else if(targetUrl === "LOGIN"){
+        window.location.href = "/todo/list?page=1";
+    } else if (targetUrl === "UPDATE_TODO_DONE") {
+        window.location.href = "/todo/list?done=" + isDone
+    } else if (targetUrl === "REMOVE_TODO_DONE") {
+        window.location.href = "/todo/list?done=" + isDone
+    } else if(targetUrl === "ADD_TODO") {
+        window.location.href = "/todo/list";
+    } else if (targetUrl === "REMOVE_TODO") {
+        window.location.href = "/todo/list";
+    } else if(targetUrl === "MODIFY_TODO") {
+        window.location.href = "/todo/list/" + todoId;
+    } else {
+        window.history.back();
+    }
+
+</script>
+
+</body>
+</html>
