@@ -1,5 +1,7 @@
 # TODO-LIST
 
+![Logo](/assets/Logo.svg)
+
 ## 📖 프로젝트 소개
 
 - Spring boot 를 활용한 기본적인 CRUD 를 학습하고자 시작한 프로젝트입니다.
