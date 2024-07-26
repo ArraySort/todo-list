@@ -8,9 +8,12 @@
 
 <div class="container" style="max-width: 850px; margin-top: 35px;">
 
-    <div class="py-3 text-center d-flex align-items-center justify-content-center">
+    <div class="list-container">
         <img alt="User Profile Image" class="user-profile-image" th:src="@{${userImage}}">
-        <h2 style="margin-left: 10px" th:text="|${userName}| + '\'s TODO LIST'">USER's TODO LIST</h2>
+        <div class="title-container">
+            <img alt="title" class="icon" src="/images/title.svg"/>
+        </div>
+        <h1 style="margin-left: 10px" th:text="'사용자 : ' + |${userName}|">USER's TODO LIST</h1>
     </div>
 
     <!--일정 등록 로그아웃 버튼-->

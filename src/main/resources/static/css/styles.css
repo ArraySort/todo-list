@@ -147,3 +147,53 @@ h1, h2 {
     background-color: #5a6268; /* 더 어두운 회색 */
     transform: scale(1.05);
 }
+
+.title-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.title-container h1 {
+    margin: 0;
+    font-size: 25px;
+    color: #333;
+}
+
+.title-container .icon {
+    width: 350px; /* 아이콘의 너비 조정 */
+    height: 50px; /* 아이콘의 높이 조정 */
+}
+
+
+/* 리스트 페이지 전용 스타일 */
+.list-container {
+    display: flex;
+    align-items: center; /* 세로 중앙 정렬 */
+    justify-content: space-between; /* 요소들 사이에 가능한 많은 공간을 둠 */
+    padding: 20px;
+}
+
+.list-container .user-profile-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #106af2;
+}
+
+.list-container .title-container {
+    display: flex;
+    align-items: center; /* 세로 중앙 정렬 */
+}
+
+.list-container .icon {
+    width: 250px; /* 아이콘의 너비 조정 */
+    height: 70px; /* 아이콘의 높이 조정 */
+}
+
+.list-container h1 {
+    font-size: 24px;
+    color: #333;
+    margin: 0;
+}
