@@ -39,3 +39,21 @@
 </p>
 
 ---
+## 🎥 Preview
+
+### 회원가입 로그인
+<div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+    <img src="assets/Signup.gif" alt="회원가입" style="max-width: 48%; height: auto;" />
+    <img src="assets/Login.gif" alt="로그인" style="max-width: 48%; height: auto;" />
+</div>
+
+### 일정 추가 및 수정
+<div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+    <img src="assets/add.gif" alt="추가" style="max-width: 48%; height: auto;" />
+    <img src="assets/modify.gif" alt="수정" style="max-width: 48%; height: auto;" />
+</div>
+
+### 상태 반영, 일정 삭제
+<div style="text-align: center;">
+    <img src="assets/list.gif" alt="리스트" style="max-width: 100%; height: auto;" />
+</div>
