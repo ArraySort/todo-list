@@ -42,18 +42,12 @@
 ## 🎥 Preview
 
 ### 회원가입 로그인
-<div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
-    <img src="assets/Signup.gif" alt="회원가입" style="max-width: 48%; height: auto;" />
-    <img src="assets/Login.gif" alt="로그인" style="max-width: 48%; height: auto;" />
-</div>
+| ![Signup](https://github.com/user-attachments/assets/e611c502-2bce-4a60-b239-f3fdc36ceb65) | ![Login](https://github.com/user-attachments/assets/4796c9b2-8187-4fa6-9008-193dd2a97266) |
+|--------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------|
 
 ### 일정 추가 및 수정
-<div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
-    <img src="assets/add.gif" alt="추가" style="max-width: 48%; height: auto;" />
-    <img src="assets/modify.gif" alt="수정" style="max-width: 48%; height: auto;" />
-</div>
+| ![add](https://github.com/user-attachments/assets/863bcf06-1a6a-4b8e-9873-19cbdb3f5a84) | ![modify](https://github.com/user-attachments/assets/9a25ab24-1b4d-4df7-991a-da2043957a23) |
+|-----------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------|
 
 ### 상태 반영, 일정 삭제
-<div style="text-align: center;">
-    <img src="assets/list.gif" alt="리스트" style="max-width: 100%; height: auto;" />
-</div>
+![list](https://github.com/user-attachments/assets/9d011628-535c-481d-ac50-4a3ee4f82ccf)
