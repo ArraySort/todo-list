@@ -186,7 +186,6 @@
         }
 
         function updateRemainingTimes() {
-            console.log("update");
             $('tbody tr').each(function () {
                 const end = $(this).find('td').eq(3).text();
                 const remainingTime = calculateRemainingTime(end);
