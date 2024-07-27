@@ -16,8 +16,7 @@
 ### Back-end
 - Language : Java17
 - FrameWork : SpringBoot 3.3.0
-- DataBase : MariaDB
-- ORM : MyBatis
+- DataBase : MariaDB, MyBatis
 
 ### Front-end
 - Template Engine : Thymeleaf
@@ -34,7 +33,7 @@
 
 ---
 
-## ERD
+## 📖 ERD
 
 <p align="center">
 <img src="assets/ERD.png" alt="ERD"/>
